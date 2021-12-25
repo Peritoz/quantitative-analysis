@@ -1,0 +1,271 @@
+{
+  "name": "Insurance",
+  "elements": [
+    {
+      "name": "Claim submission process",
+      "type": "process",
+      "frequencyPeriod": "hour",
+      "requestFrequency": 25
+    },
+    {
+      "name": "Claim handling process",
+      "type": "process",
+      "frequencyPeriod": "hour",
+      "requestFrequency": 75
+    },
+    {
+      "name": "Search component Resource",
+      "type": "resource",
+      "capacity": 1
+    },
+    {
+      "name": "View component Resource",
+      "type": "resource",
+      "capacity": 1
+    },
+    {
+      "name": "Report scanning application Resource",
+      "type": "resource",
+      "capacity": 1
+    },
+    {
+      "name": "Document management system Resource",
+      "type": "resource",
+      "capacity": 1
+    },
+    {
+      "name": "Database system Resource",
+      "type": "resource",
+      "capacity": 1
+    },
+    {
+      "name": "Document server Resource",
+      "type": "resource",
+      "capacity": 1
+    },
+    {
+      "name": "Database server Resource",
+      "type": "resource",
+      "capacity": 1
+    },
+    {
+      "name": "Database server",
+      "type": "internal_behaviour",
+      "serviceTime": 0.2
+    },
+    {
+      "name": "data access",
+      "type": "external_behaviour"
+    },
+    {
+      "name": "Database system A",
+      "type": "internal_behaviour",
+      "serviceTime": 0.5
+    },
+    {
+      "name": "database query",
+      "type": "external_behaviour"
+    },
+    {
+      "name": "Search component",
+      "type": "internal_behaviour",
+      "serviceTime": 0.5
+    },
+    {
+      "name": "search damage reports",
+      "type": "external_behaviour"
+    },
+    {
+      "name": "retrieve document",
+      "type": "external_behaviour"
+    },
+    {
+      "name": "Document management system A",
+      "type": "internal_behaviour",
+      "serviceTime": 5
+    },
+    {
+      "name": "document access",
+      "type": "external_behaviour"
+    },
+    {
+      "name": "View component",
+      "type": "internal_behaviour",
+      "serviceTime": 2
+    },
+    {
+      "name": "view damage report",
+      "type": "external_behaviour"
+    },
+    {
+      "name": "Document server",
+      "type": "internal_behaviour",
+      "serviceTime": 6
+    },
+    {
+      "name": "Document management system B",
+      "type": "internal_behaviour",
+      "serviceTime": 5
+    },
+    {
+      "name": "store document",
+      "type": "external_behaviour"
+    },
+    {
+      "name": "Database system B",
+      "type": "internal_behaviour",
+      "serviceTime": 0.5
+    },
+    {
+      "name": "database entry",
+      "type": "external_behaviour"
+    },
+    {
+      "name": "Report scanning application",
+      "type": "internal_behaviour",
+      "serviceTime": 8
+    },
+    {
+      "name": "store damage report",
+      "type": "external_behaviour"
+    }
+  ],
+  "relationships": [
+    {
+      "source": "search damage reports",
+      "target": "Claim handling process",
+      "cardinality": 1
+    },
+    {
+      "source": "view damage report",
+      "target": "Claim handling process",
+      "cardinality": 1.5
+    },
+    {
+      "source": "store damage report",
+      "target": "Claim submission process",
+      "cardinality": 1
+    },
+    {
+      "source": "search component",
+      "target": "search damage reports",
+      "cardinality": 1
+    },
+    {
+      "source": "view component",
+      "target": "view damage report",
+      "cardinality": 1
+    },
+    {
+      "source": "Report scanning application",
+      "target": "store damage report",
+      "cardinality": 1
+    },
+    {
+      "source": "database query",
+      "target": "search component",
+      "cardinality": 1
+    },
+    {
+      "source": "retrieve document",
+      "target": "view component",
+      "cardinality": 1
+    },
+    {
+      "source": "store document",
+      "target": "Report scanning application",
+      "cardinality": 1
+    },
+    {
+      "source": "database entry",
+      "target": "Report scanning application",
+      "cardinality": 1
+    },
+    {
+      "source": "Database system A",
+      "target": "database query",
+      "cardinality": 1
+    },
+    {
+      "source": "Document management system A",
+      "target": "retrieve document",
+      "cardinality": 1
+    },
+    {
+      "source": "Document management system B",
+      "target": "store document",
+      "cardinality": 1
+    },
+    {
+      "source": "Database system B",
+      "target": "database entry",
+      "cardinality": 1
+    },
+    {
+      "source": "data access",
+      "target": "Database system A",
+      "cardinality": 1
+    },
+    {
+      "source": "document access",
+      "target": "Document management system A",
+      "cardinality": 1
+    },
+    {
+      "source": "document access",
+      "target": "Document management system B",
+      "cardinality": 1
+    },
+    {
+      "source": "data access",
+      "target": "Database system B",
+      "cardinality": 1
+    },
+    {
+      "source": "Document server",
+      "target": "document access",
+      "cardinality": 1
+    },
+    {
+      "source": "Database server",
+      "target": "data access",
+      "cardinality": 1
+    },
+    {
+      "source": "Search component resource",
+      "target": "Search component"
+    },
+    {
+      "source": "View component resource",
+      "target": "View component"
+    },
+    {
+      "source": "Report scanning application resource",
+      "target": "Report scanning application"
+    },
+    {
+      "source": "Document management system resource",
+      "target": "Document management system A"
+    },
+    {
+      "source": "Document management system resource",
+      "target": "Document management system B"
+    },
+    {
+      "source": "Database system resource",
+      "target": "Database system A"
+    },
+    {
+      "source": "Database system resource",
+      "target": "Database system B"
+    },
+    {
+      "source": "Document server resource",
+      "target": "Document server"
+    },
+    {
+      "source": "Database server resource",
+      "target": "Database server"
+    }
+  ]
+}
