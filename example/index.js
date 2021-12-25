@@ -8,7 +8,7 @@ const model = new Model({name: "Test"});
 model.fromJSON(modelInput);
 
 const analysisEngine = new AnalysisEngine({model});
-const metrics = analysisEngine.getAllMetricsAsCsv(",");
+const metrics = analysisEngine.getAllMetricsAsCsv();
 
 console.log(util.inspect(metrics, true, null, true));
 
