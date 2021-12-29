@@ -1,21 +1,26 @@
-const WorkloadEngine = require("./WorkloadEngine");
-const PerformanceEngine = require("./PerformanceEngine");
+import WorkloadEngine from "@libs/engines/WorkloadEngine";
+import PerformanceEngine from "@libs/engines/PerformanceEngine";
+import Model from "@libs/model/Model";
+import PerformanceMetricInterface from "@libs/engines/PerformanceMetricInterface";
 
-function formatNumber(number) {
+function formatNumber(number: number) {
     return number.toFixed(4).replace(".", ",");
 }
 
-class QuantitativeAnalysisEngine {
-    constructor({model}) {
-        this.workloadEngine = new WorkloadEngine({model});
-        this.performanceEngine = new PerformanceEngine({model});
+export default class QuantitativeAnalysisEngine {
+    workloadEngine: WorkloadEngine;
+    performanceEngine: PerformanceEngine;
+
+    constructor(model: Model) {
+        this.workloadEngine = new WorkloadEngine(model);
+        this.performanceEngine = new PerformanceEngine(model);
     }
 
     getAllMetrics() {
         const workloadMetrics = this.workloadEngine.getAllWorkloadsMetrics();
 
         // Combining metrics
-        let metrics = this.performanceEngine.getAllPerformanceMetrics();
+        let metrics: Array<Partial<PerformanceMetricInterface>> = this.performanceEngine.getAllPerformanceMetrics();
 
         for (let i = 0; i < workloadMetrics.length; i++) {
             const workloadMetric = workloadMetrics[i];
@@ -51,5 +56,3 @@ class QuantitativeAnalysisEngine {
         return response;
     }
 }
-
-module.exports = QuantitativeAnalysisEngine;

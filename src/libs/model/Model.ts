@@ -1,22 +1,26 @@
-const Process = require("./Process");
-const Resource = require("./Resource");
-const ExternalBehaviour = require("./ExternalBehaviour");
-const InternalBehaviour = require("./InternalBehaviour");
-const Relationship = require("./Relationship");
+import ModelElement from "@libs/model/ModelElement";
+import Relationship from "@libs/model/Relationship";
+import Process from "@libs/model/Process";
+import Resource from "@libs/model/Resource";
+import InternalBehaviour from "@libs/model/InternalBehaviour";
+import ExternalBehaviour from "@libs/model/ExternalBehaviour";
+import JsonModelInterface from "@libs/model/JsonModelInterface";
 
-class Model {
-    constructor({name}) {
-        this.name = name;
-        this.processes = [];
-        this.elements = [];
-        this.relationships = [];
+export default class Model {
+    name: string = "Unknown";
+    processes: Array<Process> = [];
+    elements: Array<ModelElement> = [];
+    relationships: Array<Relationship> = [];
+
+    constructor(data: Partial<Model> = {}) {
+        Object.assign(this, data);
     }
 
     getName() {
         return this.name;
     }
 
-    getNode(nodeName) {
+    getNode(nodeName: string) {
         return this.elements.find(e => e.getName() === nodeName.toUpperCase());
     }
 
@@ -24,19 +28,19 @@ class Model {
         return this.elements;
     }
 
-    getAllByType(typeConstructor) {
+    getAllByType(typeConstructor: any) {
         return this.getElements().filter(e => e instanceof typeConstructor);
     }
 
-    getOutRelationships(node) {
+    getOutRelationships(node: ModelElement) {
         return this.relationships.filter(r => r.getSource().getName() === node.getName());
     }
 
-    getInRelationships(node) {
+    getInRelationships(node: ModelElement) {
         return this.relationships.filter(r => r.getTarget().getName() === node.getName());
     }
 
-    createRelationship(sourceName, targetName, cardinality) {
+    createRelationship(sourceName: string, targetName: string, cardinality: number) {
         const source = this.elements.find(e => e.getName() === sourceName.toUpperCase());
         const target = this.elements.find(e => e.getName() === targetName.toUpperCase());
 
@@ -57,59 +61,59 @@ class Model {
         }
     }
 
-    createProcess(name, frequencyPeriod, requestFrequency) {
+    createProcess(name: string, frequencyPeriod: string, requestFrequency: number) {
         const elementObject = new Process({name, frequencyPeriod, requestFrequency});
 
         this.elements.push(elementObject);
         this.processes.push(elementObject);
     }
 
-    createResource(name, capacity) {
+    createResource(name: string, capacity: number) {
         const elementObject = new Resource({name, capacity});
         this.elements.push(elementObject);
     }
 
-    createInternalBehaviour(name, serviceTime) {
+    createInternalBehaviour(name: string, serviceTime: number) {
         const elementObject = new InternalBehaviour({name, serviceTime});
         this.elements.push(elementObject);
     }
 
-    createExternalBehaviour(name) {
+    createExternalBehaviour(name: string) {
         const elementObject = new ExternalBehaviour({name});
         this.elements.push(elementObject);
     }
 
-    setProcessRequestFrequency(processName, requestFrequency) {
+    setProcessRequestFrequency(processName: string, requestFrequency: number) {
         const process = this.processes.find(p => p.getName() === processName.toUpperCase());
 
         if (process) {
             process.setRequestFrequency(requestFrequency);
-        }else{
+        } else {
             throw new Error(`Process "${processName}" not found. Unable to set request frequency`);
         }
     }
 
-    setServiceTime(internalBehaviourName, serviceTime) {
+    setServiceTime(internalBehaviourName: string, serviceTime: number) {
         const internalBehaviour = this.elements.find(e => e.getName() === internalBehaviourName.toUpperCase());
 
         if (internalBehaviour && internalBehaviour instanceof InternalBehaviour) {
-            internalBehaviour.setServiceTime(serviceTime);
-        }else{
+            (internalBehaviour as InternalBehaviour).setServiceTime(serviceTime);
+        } else {
             throw new Error(`Internal behaviour "${internalBehaviourName}" not found. Unable to set service time`);
         }
     }
 
-    setResourceCapacity(resourceName, capacity) {
+    setResourceCapacity(resourceName: string, capacity: number) {
         const resource = this.elements.find(e => e.getName() === resourceName.toUpperCase());
 
         if (resource && resource instanceof Resource) {
-            resource.setCapacity(capacity);
-        }else{
+            (resource as Resource).setCapacity(capacity);
+        } else {
             throw new Error(`Resource "${resourceName}" not found. Unable to set capacity`);
         }
     }
 
-    fromJSON(modelInput) {
+    fromJSON(modelInput: Partial<JsonModelInterface>) {
         if (modelInput.name && modelInput.elements && Array.isArray(modelInput.elements) &&
             modelInput.relationships && Array.isArray(modelInput.relationships)) {
             const {name, elements, relationships} = modelInput;
@@ -145,5 +149,3 @@ class Model {
         }
     }
 }
-
-module.exports = Model;

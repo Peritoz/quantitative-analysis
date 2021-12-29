@@ -1,0 +1,30 @@
+{
+  "name": "quantitative-analysis",
+  "version": "0.1.0",
+  "description": "Quantitative analysis engine for workload, response time, processing time and resource utilization estimation.",
+  "main": "src/index.ts",
+  "author": "diorbert.pereira",
+  "repository": "github:Diorbert/quantitative-analysis",
+  "scripts": {
+    "dev": "ts-node-dev -r tsconfig-paths/register --no-notify example/index.ts",
+    "test": "mocha || true",
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist/lib --copy-files --no-copy-ignored",
+    "postbuild": "tsc -p tsconfig.build.json --emitDeclarationOnly"
+  },
+  "_moduleAliases": {
+    "@libs": "src/libs"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.5",
+    "@babel/node": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/preset-typescript": "^7.16.5",
+    "@types/node": "^17.0.5",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "ts-node-dev": "^1.1.8",
+    "tsconfig-paths": "^3.12.0",
+    "typescript": "^4.5.4"
+  }
+}
