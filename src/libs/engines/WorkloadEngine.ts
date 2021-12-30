@@ -1,23 +1,19 @@
-const Process = require("../model/Process");
-const ExternalBehaviour = require("../model/ExternalBehaviour");
-const Resource = require("../model/Resource");
-
-function getLocalFrequency(node) {
-    if (node instanceof Process) {
-        return node.getRequestFrequency();
-    } else {
-        return 0;
-    }
-}
+import Process from "@libs/model/Process";
+import Resource from "@libs/model/Resource";
+import ExternalBehaviour from "@libs/model/ExternalBehaviour";
+import Model from "@libs/model/Model";
+import ModelElement from "@libs/model/ModelElement";
 
 class WorkloadEngine {
-    constructor({model}) {
+    model: Model;
+
+    constructor(model: Model) {
         this.model = model;
     }
 
-    getWorkload(node) {
+    getWorkload(node: ModelElement) {
         const outRelationships = this.model.getOutRelationships(node);
-        let workload = getLocalFrequency(node);
+        let workload = node instanceof Process ? (node as Process).getRequestFrequency() : 0;
 
         for (let i = 0; i < outRelationships.length; i++) {
             const outRelationship = outRelationships[i];
@@ -54,4 +50,4 @@ class WorkloadEngine {
     }
 }
 
-module.exports = WorkloadEngine;
+export default WorkloadEngine;

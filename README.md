@@ -14,5 +14,5 @@ This library was based on "Quantitative Analysis of Enterprise Architectures" (2
 Using npm:
 
 ``
-npm i --save https://github.com/diorbert/quantitative-analysis.git
+npm i --save https://github.com/Diorbert/quantitative-analysis.git
 ``
