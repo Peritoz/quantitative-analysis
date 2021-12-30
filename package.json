@@ -2,7 +2,11 @@
   "name": "quantitative-analysis",
   "version": "0.1.0",
   "description": "Quantitative analysis engine for workload, response time, processing time and resource utilization estimation.",
-  "main": "src/index.ts",
+  "main": "dist/lib/index.js",
+  "types": "dist/@types/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "author": "diorbert.pereira",
   "repository": "github:Diorbert/quantitative-analysis",
   "scripts": {

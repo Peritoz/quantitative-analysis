@@ -4,7 +4,25 @@ import Process from "@libs/model/Process";
 import Resource from "@libs/model/Resource";
 import InternalBehaviour from "@libs/model/InternalBehaviour";
 import ExternalBehaviour from "@libs/model/ExternalBehaviour";
-import JsonModelInterface from "@libs/model/JsonModelInterface";
+import JsonModelInterface from "@libs/model/interfaces/JsonModelInterface";
+import {TemporalUnit} from "@libs/model/enums/TemporalUnitEnum";
+import FrequencyMeasure from "@libs/model/FrequencyMeasure";
+import TemporalMeasure from "@libs/model/TemporalMeasure";
+
+function stringToUnit(unit: string): TemporalUnit {
+    if (unit !== undefined) {
+        switch (unit.toLowerCase()) {
+            case "sec":
+                return TemporalUnit.SEC;
+            case "min":
+                return TemporalUnit.MIN;
+            case "hour":
+                return TemporalUnit.HOUR;
+        }
+    }
+
+    return TemporalUnit.SEC;
+}
 
 export default class Model {
     name: string = "Unknown";
@@ -61,8 +79,10 @@ export default class Model {
         }
     }
 
-    createProcess(name: string, frequencyPeriod: string, requestFrequency: number) {
-        const elementObject = new Process({name, frequencyPeriod, requestFrequency});
+    createProcess(name: string, requestFrequency: number, frequencyPeriod: TemporalUnit) {
+        const requestFrequencyMeasure = new FrequencyMeasure(requestFrequency, frequencyPeriod);
+
+        const elementObject = new Process({name, requestFrequency: requestFrequencyMeasure, frequencyPeriod});
 
         this.elements.push(elementObject);
         this.processes.push(elementObject);
@@ -73,8 +93,10 @@ export default class Model {
         this.elements.push(elementObject);
     }
 
-    createInternalBehaviour(name: string, serviceTime: number) {
-        const elementObject = new InternalBehaviour({name, serviceTime});
+    createInternalBehaviour(name: string, serviceTime: number, timeUnit: TemporalUnit) {
+        const serviceTimeMeasure = new TemporalMeasure(serviceTime, timeUnit);
+
+        const elementObject = new InternalBehaviour({name, serviceTime: serviceTimeMeasure, timeUnit});
         this.elements.push(elementObject);
     }
 
@@ -121,17 +143,17 @@ export default class Model {
             this.name = name;
 
             for (let i = 0; i < elements.length; i++) {
-                const {name, frequencyPeriod, requestFrequency, capacity, serviceTime, type} = elements[i];
+                const {name, frequencyPeriod, requestFrequency, capacity, serviceTime, timeUnit, type} = elements[i];
 
                 switch (type) {
                     case "process":
-                        this.createProcess(name, frequencyPeriod, requestFrequency);
+                        this.createProcess(name, requestFrequency, stringToUnit(frequencyPeriod));
                         break;
                     case "resource":
                         this.createResource(name, capacity);
                         break;
                     case "internal_behaviour":
-                        this.createInternalBehaviour(name, serviceTime);
+                        this.createInternalBehaviour(name, serviceTime, stringToUnit(timeUnit));
                         break;
                     case "external_behaviour":
                         this.createExternalBehaviour(name);

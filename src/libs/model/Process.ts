@@ -1,37 +1,24 @@
 import ModelElement from "@libs/model/ModelElement";
+import FrequencyMeasure from "@libs/model/FrequencyMeasure";
+import {TemporalUnit} from "@libs/model/enums/TemporalUnitEnum";
 
 export default class Process extends ModelElement {
-    frequencyPeriod: string;
-    requestFrequency: number;
+    frequencyPeriod: TemporalUnit;
+    requestFrequency: FrequencyMeasure;
 
     constructor(data: Partial<Process> = {}) {
         super(data.name);
-        this.frequencyPeriod = data.frequencyPeriod || "sec";
-        this.requestFrequency = data.requestFrequency || 100;
 
-        switch (this.frequencyPeriod) {
-            case "sec":
-                this.requestFrequency = data.requestFrequency;
-                break;
-            case "min":
-                this.requestFrequency = data.requestFrequency / 60;
-                break;
-            case "hour":
-                this.requestFrequency = data.requestFrequency / 3600;
-                break;
-            case "day":
-                this.requestFrequency = data.requestFrequency / 86_400;
-                break;
-            default:
-                this.requestFrequency = data.requestFrequency;
-        }
+        this.frequencyPeriod = data.frequencyPeriod || TemporalUnit.SEC;
+        this.requestFrequency = data.requestFrequency !== undefined ?
+            data.requestFrequency : new FrequencyMeasure(0, this.frequencyPeriod);
     }
 
     getRequestFrequency() {
-        return this.requestFrequency;
+        return this.requestFrequency.getValue();
     }
 
     setRequestFrequency(requestFrequency: number) {
-        this.requestFrequency = requestFrequency;
+        this.requestFrequency.setValue(requestFrequency);
     }
 }

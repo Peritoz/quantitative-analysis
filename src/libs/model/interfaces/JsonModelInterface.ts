@@ -5,6 +5,7 @@ interface InputElement {
     type: string,
     capacity: number,
     serviceTime: number,
+    timeUnit: string,
     frequencyPeriod: string,
     requestFrequency: number
 }

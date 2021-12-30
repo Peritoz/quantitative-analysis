@@ -1,19 +1,23 @@
 import ModelElement from "@libs/model/ModelElement";
+import TemporalMeasure from "@libs/model/TemporalMeasure";
+import {TemporalUnit} from "@libs/model/enums/TemporalUnitEnum";
 
 export default class InternalBehaviour extends ModelElement {
-    serviceTime: number;
+    serviceTime: TemporalMeasure;
+    timeUnit: TemporalUnit;
 
     constructor(data: Partial<InternalBehaviour> = {}) {
         super(data.name);
 
-        this.serviceTime = data.serviceTime !== undefined ? data.serviceTime : 1;
+        this.timeUnit = data.timeUnit || TemporalUnit.SEC;
+        this.serviceTime = data.serviceTime !== undefined ? data.serviceTime : new TemporalMeasure(1, this.timeUnit);
     }
 
     getServiceTime() {
-        return this.serviceTime;
+        return this.serviceTime.getValue();
     }
 
     setServiceTime(serviceTime: number) {
-        this.serviceTime = serviceTime;
+        this.serviceTime.setValue(serviceTime);
     }
 }
