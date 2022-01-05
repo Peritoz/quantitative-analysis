@@ -3,8 +3,12 @@ import PerformanceEngine from "@libs/engines/PerformanceEngine";
 import Model from "@libs/model/Model";
 import PerformanceMetricInterface from "@libs/engines/PerformanceMetricInterface";
 
-function formatNumber(number: number) {
-    return number.toFixed(4).replace(".", ",");
+function formatNumber(number: number | undefined | null): string {
+    if (number !== undefined && number !== null) {
+        return number.toFixed(4).replace(".", ",");
+    } else {
+        return "?";
+    }
 }
 
 export default class QuantitativeAnalysisEngine {

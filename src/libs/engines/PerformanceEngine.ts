@@ -80,21 +80,30 @@ export default class PerformanceEngine {
             const inRelationships = this.model.getInRelationships(behaviour);
             const resources = inRelationships.filter(r => r.getSource() instanceof Resource);
             const resource = resources.length === 1 ? resources[0].getSource() : null;
-            const outRelationships = this.model.getOutRelationships(behaviour);
-            const externalBehaviour = outRelationships.length === 1 ? outRelationships[0].getTarget() : null;
 
-            const responseTime = this.getResponseTime(behaviour as InternalBehaviour);
-            const processingTime = this.getProcessingTime(behaviour as InternalBehaviour);
-            const resourceUtilization = this.getResourceUtilization(resource as Resource);
+            if (resource) {
+                const outRelationships = this.model.getOutRelationships(behaviour);
+                const externalBehaviour = outRelationships.length === 1 ? outRelationships[0].getTarget() : null;
 
-            result.push({
-                resource: resource.getName(),
-                internalBehaviour: behaviour.getName(),
-                externalBehaviour: externalBehaviour.getName(),
-                processingTime,
-                responseTime,
-                resourceUtilization
-            });
+                if (externalBehaviour) {
+                    const responseTime = this.getResponseTime(behaviour as InternalBehaviour);
+                    const processingTime = this.getProcessingTime(behaviour as InternalBehaviour);
+                    const resourceUtilization = this.getResourceUtilization(resource as Resource);
+
+                    result.push({
+                        resource: resource.getName(),
+                        internalBehaviour: behaviour.getName(),
+                        externalBehaviour: externalBehaviour.getName(),
+                        processingTime,
+                        responseTime,
+                        resourceUtilization
+                    });
+                } else {
+                    throw new Error(`Model is corrupt for quantitative analysis. Missing External Behaviour`);
+                }
+            } else {
+                throw new Error(`Model is corrupt for quantitative analysis. Missing Resource`);
+            }
         }
 
         return result;

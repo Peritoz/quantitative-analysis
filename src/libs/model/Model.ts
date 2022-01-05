@@ -9,7 +9,7 @@ import {TemporalUnit} from "@libs/model/enums/TemporalUnitEnum";
 import FrequencyMeasure from "@libs/model/FrequencyMeasure";
 import TemporalMeasure from "@libs/model/TemporalMeasure";
 
-function stringToUnit(unit: string): TemporalUnit {
+function stringToUnit(unit: string | undefined): TemporalUnit {
     if (unit !== undefined) {
         switch (unit.toLowerCase()) {
             case "sec":
@@ -79,29 +79,37 @@ export default class Model {
         }
     }
 
-    createProcess(name: string, requestFrequency: number, frequencyPeriod: TemporalUnit) {
-        const requestFrequencyMeasure = new FrequencyMeasure(requestFrequency, frequencyPeriod);
+    createProcess(process: { name: string, requestFrequency: number, frequencyPeriod?: TemporalUnit }) {
+        const requestFrequencyMeasure = new FrequencyMeasure(process.requestFrequency, process.frequencyPeriod);
 
-        const elementObject = new Process({name, requestFrequency: requestFrequencyMeasure, frequencyPeriod});
+        const elementObject = new Process({
+            name: process.name,
+            requestFrequency: requestFrequencyMeasure,
+            frequencyPeriod: process.frequencyPeriod
+        });
 
         this.elements.push(elementObject);
         this.processes.push(elementObject);
     }
 
-    createResource(name: string, capacity: number) {
-        const elementObject = new Resource({name, capacity});
+    createResource(resource: { name: string, capacity?: number }) {
+        const elementObject = new Resource(resource);
         this.elements.push(elementObject);
     }
 
-    createInternalBehaviour(name: string, serviceTime: number, timeUnit: TemporalUnit) {
-        const serviceTimeMeasure = new TemporalMeasure(serviceTime, timeUnit);
+    createInternalBehaviour(internalBehaviour: { name: string, serviceTime: number, timeUnit?: TemporalUnit }) {
+        const serviceTimeMeasure = new TemporalMeasure(internalBehaviour.serviceTime, internalBehaviour.timeUnit);
 
-        const elementObject = new InternalBehaviour({name, serviceTime: serviceTimeMeasure, timeUnit});
+        const elementObject = new InternalBehaviour({
+            name: internalBehaviour.name,
+            serviceTime: serviceTimeMeasure,
+            timeUnit: internalBehaviour.timeUnit
+        });
         this.elements.push(elementObject);
     }
 
-    createExternalBehaviour(name: string) {
-        const elementObject = new ExternalBehaviour({name});
+    createExternalBehaviour(externalBehaviour: { name: string }) {
+        const elementObject = new ExternalBehaviour(externalBehaviour);
         this.elements.push(elementObject);
     }
 
@@ -145,19 +153,33 @@ export default class Model {
             for (let i = 0; i < elements.length; i++) {
                 const {name, frequencyPeriod, requestFrequency, capacity, serviceTime, timeUnit, type} = elements[i];
 
-                switch (type) {
-                    case "process":
-                        this.createProcess(name, requestFrequency, stringToUnit(frequencyPeriod));
-                        break;
-                    case "resource":
-                        this.createResource(name, capacity);
-                        break;
-                    case "internal_behaviour":
-                        this.createInternalBehaviour(name, serviceTime, stringToUnit(timeUnit));
-                        break;
-                    case "external_behaviour":
-                        this.createExternalBehaviour(name);
-                        break;
+                if (name) {
+                    switch (type) {
+                        case "process":
+                            if (requestFrequency) {
+                                this.createProcess({
+                                    name,
+                                    requestFrequency,
+                                    frequencyPeriod: stringToUnit(frequencyPeriod)
+                                });
+                            } else {
+                                throw new Error(`Invalid model. Request Frequency is required for Processes. Missing value for ${name}`);
+                            }
+                            break;
+                        case "resource":
+                            this.createResource({name, capacity});
+                            break;
+                        case "internal_behaviour":
+                            if (serviceTime) {
+                                this.createInternalBehaviour({name, serviceTime, timeUnit: stringToUnit(timeUnit)});
+                            } else {
+                                throw new Error(`Invalid model. Service Time is required for Internal Behaviours. Missing value for ${name}`);
+                            }
+                            break;
+                        case "external_behaviour":
+                            this.createExternalBehaviour({name});
+                            break;
+                    }
                 }
             }
 

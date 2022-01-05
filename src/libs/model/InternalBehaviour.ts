@@ -6,11 +6,11 @@ export default class InternalBehaviour extends ModelElement {
     serviceTime: TemporalMeasure;
     timeUnit: TemporalUnit;
 
-    constructor(data: Partial<InternalBehaviour> = {}) {
+    constructor(data: { name: string, serviceTime: TemporalMeasure, timeUnit?: TemporalUnit }) {
         super(data.name);
 
         this.timeUnit = data.timeUnit || TemporalUnit.SEC;
-        this.serviceTime = data.serviceTime !== undefined ? data.serviceTime : new TemporalMeasure(1, this.timeUnit);
+        this.serviceTime = data.serviceTime;
     }
 
     getServiceTime() {

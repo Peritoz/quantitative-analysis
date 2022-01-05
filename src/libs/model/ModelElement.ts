@@ -1,5 +1,5 @@
 export default class ModelElement {
-    name: string = "Unknown";
+    name: string = "UNKNOWN";
 
     constructor(name: string) {
         this.name = name.toUpperCase();

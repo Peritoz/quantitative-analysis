@@ -33,17 +33,27 @@ class WorkloadEngine {
             const behaviour = externalBehaviours[i];
             const inRelationships = this.model.getInRelationships(behaviour);
             const internalBehaviour = inRelationships.length === 1 ? inRelationships[0].getSource() : null;
-            const internalBehaviorInRelationships = this.model.getInRelationships(internalBehaviour);
-            const resources = internalBehaviorInRelationships.filter(r => r.getSource() instanceof Resource);
-            const resource = resources.length === 1 ? resources[0].getSource() : null;
-            const workload = this.getWorkload(behaviour);
 
-            result.push({
-                resource: resource.getName(),
-                externalBehaviour: behaviour.getName(),
-                internalBehaviour: internalBehaviour.getName(),
-                workload
-            });
+            if (internalBehaviour) {
+                const internalBehaviorInRelationships = this.model.getInRelationships(internalBehaviour);
+                const resources = internalBehaviorInRelationships.filter(r => r.getSource() instanceof Resource);
+                const resource = resources.length === 1 ? resources[0].getSource() : null;
+
+                if (resource) {
+                    const workload = this.getWorkload(behaviour);
+
+                    result.push({
+                        resource: resource.getName(),
+                        externalBehaviour: behaviour.getName(),
+                        internalBehaviour: internalBehaviour.getName(),
+                        workload
+                    });
+                } else {
+                    throw new Error(`Model is corrupt for quantitative analysis. Missing Resource`);
+                }
+            } else {
+                throw new Error(`Model is corrupt for quantitative analysis. Missing Internal Behaviour`);
+            }
         }
 
         return result;

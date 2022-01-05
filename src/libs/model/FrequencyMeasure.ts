@@ -3,7 +3,7 @@ import {TemporalUnit} from "@libs/model/enums/TemporalUnitEnum";
 export default class FrequencyMeasure {
     value: number;
 
-    constructor(value: number, measurementPeriod: TemporalUnit) {
+    constructor(value: number, measurementPeriod?: TemporalUnit) {
         switch (measurementPeriod) {
             case TemporalUnit.SEC:
                 this.value = value;

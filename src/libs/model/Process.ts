@@ -6,12 +6,11 @@ export default class Process extends ModelElement {
     frequencyPeriod: TemporalUnit;
     requestFrequency: FrequencyMeasure;
 
-    constructor(data: Partial<Process> = {}) {
+    constructor(data: { name: string, frequencyPeriod?: TemporalUnit, requestFrequency: FrequencyMeasure }) {
         super(data.name);
 
         this.frequencyPeriod = data.frequencyPeriod || TemporalUnit.SEC;
-        this.requestFrequency = data.requestFrequency !== undefined ?
-            data.requestFrequency : new FrequencyMeasure(0, this.frequencyPeriod);
+        this.requestFrequency = data.requestFrequency;
     }
 
     getRequestFrequency() {

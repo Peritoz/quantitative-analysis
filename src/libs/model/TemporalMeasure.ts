@@ -3,7 +3,7 @@ import {TemporalUnit} from "@libs/model/enums/TemporalUnitEnum";
 export default class TemporalMeasure {
     value: number;
 
-    constructor(value: number, unit: TemporalUnit) {
+    constructor(value: number, unit?: TemporalUnit) {
         switch (unit) {
             case TemporalUnit.SEC:
                 this.value = value;
