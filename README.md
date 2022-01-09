@@ -11,7 +11,6 @@ This library was based on "Quantitative Analysis of Enterprise Architectures" (2
 
 ## Installation
 
-Using npm:
 Using NPM:
 
 ``
