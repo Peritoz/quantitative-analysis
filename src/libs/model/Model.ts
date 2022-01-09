@@ -38,8 +38,8 @@ export default class Model {
         return this.name;
     }
 
-    getNode(nodeName: string) {
-        return this.elements.find(e => e.getName() === nodeName.toUpperCase());
+    getElement(elementName: string) {
+        return this.elements.find(e => e.getName() === elementName.toUpperCase());
     }
 
     getElements() {
@@ -50,12 +50,42 @@ export default class Model {
         return this.getElements().filter(e => e instanceof typeConstructor);
     }
 
-    getOutRelationships(node: ModelElement) {
-        return this.relationships.filter(r => r.getSource().getName() === node.getName());
+    getOutRelationships(element: ModelElement) {
+        return this.relationships.filter(r => r.getSource().getName() === element.getName());
     }
 
-    getInRelationships(node: ModelElement) {
-        return this.relationships.filter(r => r.getTarget().getName() === node.getName());
+    getInRelationships(element: ModelElement) {
+        return this.relationships.filter(r => r.getTarget().getName() === element.getName());
+    }
+
+    removeElement(elementName: string) {
+        const key = elementName.toUpperCase();
+        const elementIndex = this.elements.findIndex(e => e.getName() === key);
+
+        if (elementIndex !== -1) {
+            this.elements = this.elements.filter(e => e.getName() !== key);
+            this.removeRelationshipsToElement(elementName);
+        }
+    }
+
+    removeRelationshipsToElement(elementName: string) {
+        const key = elementName.toUpperCase();
+
+        // Inbound
+        this.relationships = this.relationships.filter(r => r.getTarget().getName() !== key);
+
+        // Outbound
+        this.relationships = this.relationships.filter(r => r.getSource().getName() !== key);
+    }
+
+    removeRelationship(sourceName: string, targetName: string) {
+        const sourceKey = sourceName.toUpperCase();
+        const targetKey = targetName.toUpperCase();
+        const relIndex = this.relationships.findIndex(r => r.getSource().getName() === sourceKey && r.getTarget().getName() === targetKey);
+
+        if (relIndex !== -1) {
+            this.relationships = this.relationships.filter(r => !(r.getSource().getName() === sourceKey && r.getTarget().getName() === targetKey));
+        }
     }
 
     createRelationship(sourceName: string, targetName: string, cardinality: number) {

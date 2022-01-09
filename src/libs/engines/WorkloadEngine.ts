@@ -11,9 +11,9 @@ class WorkloadEngine {
         this.model = model;
     }
 
-    getWorkload(node: ModelElement) {
-        const outRelationships = this.model.getOutRelationships(node);
-        let workload = node instanceof Process ? (node as Process).getRequestFrequency() : 0;
+    getWorkload(element: ModelElement) {
+        const outRelationships = this.model.getOutRelationships(element);
+        let workload = element instanceof Process ? (element as Process).getRequestFrequency() : 0;
 
         for (let i = 0; i < outRelationships.length; i++) {
             const outRelationship = outRelationships[i];
