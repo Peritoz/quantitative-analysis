@@ -46,6 +46,10 @@ export default class Model {
         return this.elements;
     }
 
+    getRelationships() {
+        return this.relationships;
+    }
+
     getAllByType(typeConstructor: any) {
         return this.getElements().filter(e => e instanceof typeConstructor);
     }

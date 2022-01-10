@@ -3,7 +3,7 @@ import fs from "fs";
 import Model from "../src/libs/model/Model";
 import AnalysisEngine from "../src/libs/engines/QuantitativeAnalysisEngine";
 
-const modelInput = require("./example.json");
+const modelInput = require("../__tests__/unit/data/example.json");
 
 const model = new Model({name: "Test"});
 model.fromJSON(modelInput);
