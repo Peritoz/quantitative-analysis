@@ -32,7 +32,9 @@ export default class QuantitativeAnalysisEngine {
             let metric = metrics.find(m => m.internalBehaviour === workloadMetric.internalBehaviour &&
                 m.externalBehaviour === workloadMetric.externalBehaviour);
 
-            metric.workload = workloadMetric.workload;
+            if(metric){
+                metric.workload = workloadMetric.workload;
+            }
         }
 
         return metrics;
