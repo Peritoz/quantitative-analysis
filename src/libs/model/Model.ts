@@ -4,7 +4,7 @@ import Process from "@libs/model/Process";
 import Resource from "@libs/model/Resource";
 import InternalBehaviour from "@libs/model/InternalBehaviour";
 import ExternalBehaviour from "@libs/model/ExternalBehaviour";
-import JsonModelInterface from "@libs/model/interfaces/JsonModelInterface";
+import JsonModel from "@libs/model/interfaces/JsonModel";
 import {TemporalUnit} from "@libs/model/enums/TemporalUnitEnum";
 import FrequencyMeasure from "@libs/model/FrequencyMeasure";
 import TemporalMeasure from "@libs/model/TemporalMeasure";
@@ -177,7 +177,7 @@ export default class Model {
         }
     }
 
-    fromJSON(modelInput: Partial<JsonModelInterface>) {
+    fromJSON(modelInput: Partial<JsonModel>) {
         if (modelInput.name && modelInput.elements && Array.isArray(modelInput.elements) &&
             modelInput.relationships && Array.isArray(modelInput.relationships)) {
             const {name, elements, relationships} = modelInput;

@@ -16,7 +16,7 @@ interface InputRelationship{
     cardinality: number
 }
 
-export default interface JsonModelInterface {
+export default interface JsonModel {
     name: string;
     processes: Array<Process>;
     elements: Array<Partial<InputElement>>;
