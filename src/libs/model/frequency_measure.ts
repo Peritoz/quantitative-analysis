@@ -1,4 +1,4 @@
-import {TemporalUnit} from "@libs/model/enums/TemporalUnitEnum";
+import {TemporalUnit} from "@libs/model/enums/temporal_unit_enum";
 
 export default class FrequencyMeasure {
     value: number;

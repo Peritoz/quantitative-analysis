@@ -1,6 +1,6 @@
-import ModelElement from "@libs/model/ModelElement";
-import FrequencyMeasure from "@libs/model/FrequencyMeasure";
-import {TemporalUnit} from "@libs/model/enums/TemporalUnitEnum";
+import ModelElement from "@libs/model/model_element";
+import FrequencyMeasure from "@libs/model/frequency_measure";
+import {TemporalUnit} from "@libs/model/enums/temporal_unit_enum";
 
 export default class Process extends ModelElement {
     frequencyPeriod: TemporalUnit;

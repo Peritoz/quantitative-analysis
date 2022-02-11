@@ -1,8 +1,8 @@
-import Resource from "@libs/model/Resource";
-import InternalBehaviour from "@libs/model/InternalBehaviour";
-import Model from "@libs/model/Model";
-import WorkloadEngine from "@libs/engines/WorkloadEngine";
-import PerformanceMetricInterface from "@libs/engines/PerformanceMetricInterface";
+import Resource from "@libs/model/resource";
+import InternalBehaviour from "@libs/model/internal_behaviour";
+import Model from "@libs/model/model";
+import WorkloadEngine from "@libs/engines/workload_engine";
+import PerformanceMetricInterface from "@libs/engines/performance_metric";
 
 export default class PerformanceEngine {
     model: Model;
@@ -52,20 +52,12 @@ export default class PerformanceEngine {
         const relationships = this.model.getInRelationships(behaviour);
         let responseTime = 0;
 
-        if (behaviour instanceof InternalBehaviour) {
-            const resources = relationships.filter(r => r.getSource() instanceof Resource);
-            const resource = resources.length === 1 ? resources[0].getSource() : null;
-
-            if (resource) {
-                responseTime = this.getProcessingTime(behaviour) / (1 - this.getResourceUtilization(resource as Resource));
-            } else {
-                throw new Error(`No resource found: "${behaviour.getName()}"`);
-            }
+        const resources = relationships.filter(r => r.getSource() instanceof Resource);
+        const resource = resources.length === 1 ? resources[0].getSource() : null;
+        if (resource) {
+            responseTime = this.getProcessingTime(behaviour) / (1 - this.getResourceUtilization(resource as Resource));
         } else {
-            const internalBehaviours = relationships.filter(r => r.getSource() instanceof InternalBehaviour);
-            const internalBehaviour = internalBehaviours.length === 1 ? internalBehaviours[0].getSource() : null;
-
-            responseTime = this.getResponseTime(internalBehaviour as InternalBehaviour);
+            throw new Error(`No resource found: "${behaviour.getName()}"`);
         }
 
         return responseTime;

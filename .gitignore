@@ -21,7 +21,6 @@ dist/
 
 # Maven
 target/
-dist/
 
 # JetBrains IDE
 .idea/
@@ -48,3 +47,5 @@ Thumbs.db
 *.mov
 *.wmv
 
+# Jest
+__tests__/coverage/

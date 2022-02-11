@@ -1,13 +1,13 @@
-import ModelElement from "@libs/model/ModelElement";
-import Relationship from "@libs/model/Relationship";
-import Process from "@libs/model/Process";
-import Resource from "@libs/model/Resource";
-import InternalBehaviour from "@libs/model/InternalBehaviour";
-import ExternalBehaviour from "@libs/model/ExternalBehaviour";
-import JsonModelInterface from "@libs/model/interfaces/JsonModelInterface";
-import {TemporalUnit} from "@libs/model/enums/TemporalUnitEnum";
-import FrequencyMeasure from "@libs/model/FrequencyMeasure";
-import TemporalMeasure from "@libs/model/TemporalMeasure";
+import ModelElement from "@libs/model/model_element";
+import Relationship from "@libs/model/relationship";
+import Process from "@libs/model/process";
+import Resource from "@libs/model/resource";
+import InternalBehaviour from "@libs/model/internal_behaviour";
+import ExternalBehaviour from "@libs/model/external_behaviour";
+import JsonModel from "@libs/model/interfaces/json_model";
+import {TemporalUnit} from "@libs/model/enums/temporal_unit_enum";
+import FrequencyMeasure from "@libs/model/frequency_measure";
+import TemporalMeasure from "@libs/model/temporal_measure";
 
 function stringToUnit(unit: string | undefined): TemporalUnit {
     if (unit !== undefined) {
@@ -38,24 +38,58 @@ export default class Model {
         return this.name;
     }
 
-    getNode(nodeName: string) {
-        return this.elements.find(e => e.getName() === nodeName.toUpperCase());
+    getElement(elementName: string) {
+        return this.elements.find(e => e.getName() === elementName.toUpperCase());
     }
 
     getElements() {
         return this.elements;
     }
 
+    getRelationships() {
+        return this.relationships;
+    }
+
     getAllByType(typeConstructor: any) {
         return this.getElements().filter(e => e instanceof typeConstructor);
     }
 
-    getOutRelationships(node: ModelElement) {
-        return this.relationships.filter(r => r.getSource().getName() === node.getName());
+    getOutRelationships(element: ModelElement) {
+        return this.relationships.filter(r => r.getSource().getName() === element.getName());
     }
 
-    getInRelationships(node: ModelElement) {
-        return this.relationships.filter(r => r.getTarget().getName() === node.getName());
+    getInRelationships(element: ModelElement) {
+        return this.relationships.filter(r => r.getTarget().getName() === element.getName());
+    }
+
+    removeElement(elementName: string) {
+        const key = elementName.toUpperCase();
+        const elementIndex = this.elements.findIndex(e => e.getName() === key);
+
+        if (elementIndex !== -1) {
+            this.elements = this.elements.filter(e => e.getName() !== key);
+            this.removeRelationshipsToElement(elementName);
+        }
+    }
+
+    removeRelationshipsToElement(elementName: string) {
+        const key = elementName.toUpperCase();
+
+        // Inbound
+        this.relationships = this.relationships.filter(r => r.getTarget().getName() !== key);
+
+        // Outbound
+        this.relationships = this.relationships.filter(r => r.getSource().getName() !== key);
+    }
+
+    removeRelationship(sourceName: string, targetName: string) {
+        const sourceKey = sourceName.toUpperCase();
+        const targetKey = targetName.toUpperCase();
+        const relIndex = this.relationships.findIndex(r => r.getSource().getName() === sourceKey && r.getTarget().getName() === targetKey);
+
+        if (relIndex !== -1) {
+            this.relationships = this.relationships.filter(r => !(r.getSource().getName() === sourceKey && r.getTarget().getName() === targetKey));
+        }
     }
 
     createRelationship(sourceName: string, targetName: string, cardinality: number) {
@@ -143,7 +177,7 @@ export default class Model {
         }
     }
 
-    fromJSON(modelInput: Partial<JsonModelInterface>) {
+    fromJSON(modelInput: Partial<JsonModel>) {
         if (modelInput.name && modelInput.elements && Array.isArray(modelInput.elements) &&
             modelInput.relationships && Array.isArray(modelInput.relationships)) {
             const {name, elements, relationships} = modelInput;

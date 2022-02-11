@@ -1,4 +1,4 @@
-import Process from "@libs/model/Process";
+import Process from "@libs/model/process";
 
 interface InputElement {
     name: string,
@@ -16,7 +16,7 @@ interface InputRelationship{
     cardinality: number
 }
 
-export default interface JsonModelInterface {
+export default interface JsonModel {
     name: string;
     processes: Array<Process>;
     elements: Array<Partial<InputElement>>;

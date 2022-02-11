@@ -12,6 +12,7 @@
         "sourceMap": true,
         "declaration": true,
         "removeComments": true,
+        "strict": true,
         "outDir": "./dist/lib",
         "declarationDir": "./dist/@types",
         "baseUrl": "./",

@@ -1,4 +1,4 @@
-import ModelElement from "@libs/model/ModelElement";
+import ModelElement from "@libs/model/model_element";
 
 export default class Relationship {
     source: ModelElement = new ModelElement("UNKNOWN");
@@ -6,7 +6,12 @@ export default class Relationship {
     cardinality: number = 1;
 
     constructor(data: { source: ModelElement, target: ModelElement, cardinality?: number }) {
-        Object.assign(this, data);
+        this.source = data.source;
+        this.target = data.target;
+
+        if (data.cardinality !== undefined) {
+            this.cardinality = data.cardinality;
+        }
     }
 
     getSource() {
