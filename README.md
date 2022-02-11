@@ -14,13 +14,13 @@ This library was based on "Quantitative Analysis of Enterprise Architectures" (2
 Using NPM:
 
 ``
-npm i --save quantitative-analysis
+npm i --save @peritoz/quantitative-analysis
 ``
 
 Using Yarn:
 
 ``
-yarn add quantitative-analysis
+yarn add @peritoz/quantitative-analysis
 ``
 
 ## Model Structure
@@ -29,8 +29,10 @@ The architecture to be analyzed must be described using four basic building bloc
 
 ![Model representation](./docs/model.jpg)
 
-- **Process**: Represents an entry-point to the architecture. Usually is related to user behaviour. Processes have the following properties:
-  - *Request frequency*: Frequency of requests made to the architecture. The frequency is always in amount per unit of time, e.g. 500/s.
+The structure above represents the normalized model, which is imperative to a proper quantitative analysis.
+
+- **Process**: Represents an entry point to the architecture. Usually it is related to user behaviour. Processes have the following properties:
+  - *Request frequency*: Frequency of requests made to the architecture. The frequency is always in amount per unit of time, e.g., 500/s.
 - **External Function**: Represents externalized behaviour (service) by a resource (transitively).
 - **Internal Function**: Represents internal processing units performed by a resource. Internal behaviours have the following properties:
   - *Service Time*: Processing time for the execution of the behaviour.
@@ -83,7 +85,7 @@ The imported JSON must describe the elements and relationships of the model. Rel
 Use the ```fromJSON``` method to import the JSON content to the model.
 
 ```
-const modelInput = require("./example.json");
+const modelInput = require("./input.json");
 const model = new Model({name: "JSON Importing"});
 model.fromJSON(modelInput);
 ```
@@ -105,3 +107,36 @@ createRelationship(sourceName: string, targetName: string, cardinality: number)
 ```
 
 ## Quantitative Analysis
+
+Quantitative analysis provides an analytical tool for workload, response time, processing time and utility estimation.
+
+### Example
+
+```
+const modelInput = require("./input.json");
+const model = new Model({name: "JSON Importing"});
+model.fromJSON(modelInput);
+
+const analysisEngine = new QuantitativeAnalysisEngine(instance);
+const metrics = analysisEngine.getAllMetrics();
+```
+
+NOTE: The usage depends on a normalized input model.
+
+Please see "Quantitative Analysis of Enterprise Architectures" (2005) from Maria-Eugenia Iacob and Henk Jonkers for more details about the processing algorithm.
+
+### Result
+
+You should expect as a result an array of Performance Metrics, as described below:
+
+```
+PerformanceMetricInterface {
+    resource: string,
+    internalBehaviour: string,
+    externalBehaviour: string,
+    workload: number,
+    processingTime: number,
+    responseTime: number,
+    resourceUtilization: number
+}
+```

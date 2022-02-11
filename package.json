@@ -10,7 +10,6 @@
   "author": "diorbert.pereira",
   "repository": "github:Arktect-Solutions/quantitative-analysis",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --no-notify example/index.ts",
     "test": "npx jest",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist/lib --copy-files --no-copy-ignored",
     "postbuild": "tsc -p tsconfig.build.json --emitDeclarationOnly"

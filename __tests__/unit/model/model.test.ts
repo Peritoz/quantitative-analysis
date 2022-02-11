@@ -1,5 +1,5 @@
 import {Model} from "../../../src/index";
-import {TemporalUnit} from "../../../src/libs/model/enums/TemporalUnitEnum";
+import {TemporalUnit} from "../../../src/libs/model/enums/temporal_unit_enum";
 
 describe("Model", () => {
     let instance: Model;

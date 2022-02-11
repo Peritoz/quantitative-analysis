@@ -1,8 +1,8 @@
-import Process from "@libs/model/Process";
-import Resource from "@libs/model/Resource";
-import ExternalBehaviour from "@libs/model/ExternalBehaviour";
-import Model from "@libs/model/Model";
-import ModelElement from "@libs/model/ModelElement";
+import Process from "@libs/model/process";
+import Resource from "@libs/model/resource";
+import ExternalBehaviour from "@libs/model/external_behaviour";
+import Model from "@libs/model/model";
+import ModelElement from "@libs/model/model_element";
 
 class WorkloadEngine {
     model: Model;

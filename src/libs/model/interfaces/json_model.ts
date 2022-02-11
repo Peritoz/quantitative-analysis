@@ -1,4 +1,4 @@
-import Process from "@libs/model/Process";
+import Process from "@libs/model/process";
 
 interface InputElement {
     name: string,

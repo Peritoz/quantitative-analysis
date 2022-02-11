@@ -1,13 +1,13 @@
-import ModelElement from "@libs/model/ModelElement";
-import Relationship from "@libs/model/Relationship";
-import Process from "@libs/model/Process";
-import Resource from "@libs/model/Resource";
-import InternalBehaviour from "@libs/model/InternalBehaviour";
-import ExternalBehaviour from "@libs/model/ExternalBehaviour";
-import JsonModel from "@libs/model/interfaces/JsonModel";
-import {TemporalUnit} from "@libs/model/enums/TemporalUnitEnum";
-import FrequencyMeasure from "@libs/model/FrequencyMeasure";
-import TemporalMeasure from "@libs/model/TemporalMeasure";
+import ModelElement from "@libs/model/model_element";
+import Relationship from "@libs/model/relationship";
+import Process from "@libs/model/process";
+import Resource from "@libs/model/resource";
+import InternalBehaviour from "@libs/model/internal_behaviour";
+import ExternalBehaviour from "@libs/model/external_behaviour";
+import JsonModel from "@libs/model/interfaces/json_model";
+import {TemporalUnit} from "@libs/model/enums/temporal_unit_enum";
+import FrequencyMeasure from "@libs/model/frequency_measure";
+import TemporalMeasure from "@libs/model/temporal_measure";
 
 function stringToUnit(unit: string | undefined): TemporalUnit {
     if (unit !== undefined) {

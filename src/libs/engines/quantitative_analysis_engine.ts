@@ -1,7 +1,7 @@
-import WorkloadEngine from "@libs/engines/WorkloadEngine";
-import PerformanceEngine from "@libs/engines/PerformanceEngine";
-import Model from "@libs/model/Model";
-import PerformanceMetricInterface from "@libs/engines/PerformanceMetricInterface";
+import WorkloadEngine from "@libs/engines/workload_engine";
+import PerformanceEngine from "@libs/engines/performance_engine";
+import Model from "@libs/model/model";
+import PerformanceMetricInterface from "@libs/engines/performance_metric";
 
 function formatNumber(number: number | undefined | null): string {
     if (number !== undefined && number !== null) {

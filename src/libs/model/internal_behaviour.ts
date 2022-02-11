@@ -1,6 +1,6 @@
-import ModelElement from "@libs/model/ModelElement";
-import TemporalMeasure from "@libs/model/TemporalMeasure";
-import {TemporalUnit} from "@libs/model/enums/TemporalUnitEnum";
+import ModelElement from "@libs/model/model_element";
+import TemporalMeasure from "@libs/model/temporal_measure";
+import {TemporalUnit} from "@libs/model/enums/temporal_unit_enum";
 
 export default class InternalBehaviour extends ModelElement {
     serviceTime: TemporalMeasure;
