@@ -1,5 +1,5 @@
 {
-  "name": "quantitative-analysis",
+  "name": "@peritoz/quantitative-analysis",
   "version": "0.1.0",
   "description": "Quantitative analysis engine for workload, response time, processing time and resource utilization estimation.",
   "main": "dist/lib/index.js",
@@ -8,7 +8,7 @@
     "/dist"
   ],
   "author": "diorbert.pereira",
-  "repository": "github:Arktect-Solutions/quantitative-analysis",
+  "repository": "github:Peritoz/quantitative-analysis",
   "scripts": {
     "test": "npx jest",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist/lib --copy-files --no-copy-ignored",
@@ -18,6 +18,10 @@
     "@libs": "src/libs"
   },
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Peritoz/quantitative-analysis/issues"
+  },
+  "homepage": "https://github.com/Peritoz/quantitative-analysis#readme",
   "devDependencies": {
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.5",
@@ -32,5 +36,13 @@
     "ts-node-dev": "^1.1.8",
     "tsconfig-paths": "^3.12.0",
     "typescript": "^4.5.4"
-  }
+  },
+  "keywords": [
+    "architecture",
+    "performance",
+    "workload",
+    "response time",
+    "processing time",
+    "quantitative analysis"
+  ]
 }
