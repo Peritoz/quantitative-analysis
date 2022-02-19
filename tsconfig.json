@@ -15,14 +15,13 @@
         "strict": true,
         "outDir": "./dist/lib",
         "declarationDir": "./dist/@types",
-        "baseUrl": "./",
         "typeRoots": ["./@types", "./node_modules/@types"],
+        "baseUrl": ".",
         "paths": {
             "@libs/*": ["src/libs/*"]
         }
     },
     "include": [
-        "./src/**/*"
-    ],
-
+        "./src/**/*", "@types/**/*", "__tests__/**/*"
+    ]
 }

@@ -1,5 +1,5 @@
 import {Model} from "../../../src/index";
-import {TemporalUnit} from "../../../src/libs/model/enums/temporal_unit_enum";
+import {TemporalUnit} from "@libs/model/enums/temporal_unit_enum";
 
 describe("Model", () => {
     let instance: Model;
@@ -25,7 +25,7 @@ describe("Model", () => {
 
             const element = instance.getElement("PROCESS");
 
-            expect(element.getName()).toBe("PROCESS");
+            expect(element?.getName()).toBe("PROCESS");
         });
 
         it("should create a resource element", () => {
@@ -33,7 +33,7 @@ describe("Model", () => {
 
             const element = instance.getElement("RESOURCE");
 
-            expect(element.getName()).toBe("RESOURCE");
+            expect(element?.getName()).toBe("RESOURCE");
         });
 
         it("should create an external behaviour element", () => {
@@ -41,7 +41,7 @@ describe("Model", () => {
 
             const element = instance.getElement("EXTERNAL BEHAVIOUR");
 
-            expect(element.getName()).toBe("EXTERNAL BEHAVIOUR");
+            expect(element?.getName()).toBe("EXTERNAL BEHAVIOUR");
         });
 
         it("should create an internal behaviour element", () => {
@@ -53,7 +53,7 @@ describe("Model", () => {
 
             const element = instance.getElement("INTERNAL BEHAVIOUR");
 
-            expect(element.getName()).toBe("INTERNAL BEHAVIOUR");
+            expect(element?.getName()).toBe("INTERNAL BEHAVIOUR");
         });
 
         it("should create relationships", () => {
@@ -61,7 +61,11 @@ describe("Model", () => {
             instance.createInternalBehaviour({name: "A", serviceTime: 0.5, timeUnit: TemporalUnit.SEC});
             instance.createRelationship("A", "B", 2);
 
-            const relationships = instance.getInRelationships(instance.getElement("B"));
+            const bElement = instance.getElement("B");
+
+            expect(bElement).not.toBe(undefined);
+
+            const relationships = instance.getInRelationships(bElement!);
 
             expect(relationships.length).toBe(1);
             expect(relationships[0].getSource().getName()).toBe("A");
@@ -76,7 +80,11 @@ describe("Model", () => {
 
             instance.removeRelationship("A", "B");
 
-            const relationships = instance.getInRelationships(instance.getElement("B"));
+            const bElement = instance.getElement("B");
+
+            expect(bElement).not.toBe(undefined);
+
+            const relationships = instance.getInRelationships(bElement!);
 
             expect(relationships.length).toBe(0);
         });
@@ -86,11 +94,12 @@ describe("Model", () => {
             instance.createInternalBehaviour({name: "B", serviceTime: 0.5, timeUnit: TemporalUnit.SEC});
             instance.createInternalBehaviour({name: "C", serviceTime: 0.5, timeUnit: TemporalUnit.SEC});
             instance.createRelationship("B", "A", 2);
-            instance.createRelationship("C", "A");
+            instance.createRelationship("C", "A",1);
 
             instance.removeElement("A");
             const element = instance.getElement("A");
-            const relationships = instance.getInRelationships(instance.getElement("A"));
+
+            const relationships = instance.getInRelationships(element);
 
             expect(element).toBe(undefined);
             expect(relationships.length).toBe(0);

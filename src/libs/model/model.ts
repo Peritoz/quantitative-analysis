@@ -58,8 +58,8 @@ export default class Model {
         return this.relationships.filter(r => r.getSource().getName() === element.getName());
     }
 
-    getInRelationships(element: ModelElement) {
-        return this.relationships.filter(r => r.getTarget().getName() === element.getName());
+    getInRelationships(element: ModelElement | undefined) {
+        return this.relationships.filter(r => r.getTarget().getName() === element?.getName());
     }
 
     removeElement(elementName: string) {
