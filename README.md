@@ -117,7 +117,7 @@ const modelInput = require("./input.json");
 const model = new Model({name: "JSON Importing"});
 model.fromJSON(modelInput);
 
-const analysisEngine = new QuantitativeAnalysisEngine(instance);
+const analysisEngine = new QuantitativeAnalysisEngine(model);
 const metrics = analysisEngine.getAllMetrics();
 ```
 
