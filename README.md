@@ -110,6 +110,18 @@ createRelationship(sourceName: string, targetName: string, cardinality: number)
 
 Quantitative analysis provides an analytical tool for workload, response time, processing time and utility estimation.
 
+You can perform quantitative analysis on a Model using the **Quantitative Analysis Engine**.
+
+```
+class QuantitativeAnalysisEngine {
+    constructor(model: Model);
+
+    getAllMetrics(includeNormalizedValues: boolean = false): Array<QuantitativeMetric>;
+
+    getAllMetricsAsCsv(separator: string = ";", includeNormalizedValues: boolean = false): Array<string>;
+}
+```
+
 ### Example
 
 ```
@@ -118,28 +130,28 @@ const model = new Model({name: "JSON Importing"});
 model.fromJSON(modelInput);
 
 const analysisEngine = new QuantitativeAnalysisEngine(model);
-const metrics = analysisEngine.getAllMetrics();
+const metrics = analysisEngine.getAllMetrics(true);
 ```
 
 NOTE: The usage depends on a normalized input model.
 
-Please see "Quantitative Analysis of Enterprise Architectures" (2005) from Maria-Eugenia Iacob and Henk Jonkers for more details about the processing algorithm.
+Please see *"Quantitative Analysis of Enterprise Architectures"* (2005) from **Maria-Eugenia Iacob** and **Henk Jonkers** for more details about the processing algorithm.
 
 ### Result
 
-You should expect as a result an array of Performance Metrics, as described below:
+You should expect as a result an array of Quantitative Metrics, as described below:
 
 ```
-PerformanceMetricInterface {
+QuantitativeMetric {
     resource: string,
     internalBehaviour: string,
     externalBehaviour: string,
     workload: number,
-    normalizedWorkload?: number,
     processingTime: number,
-    normalizedProcessingTime?: number,
     responseTime: number,
+    resourceUtilization: number,
+    normalizedWorkload?: number,
+    normalizedProcessingTime?: number,
     normalizedResponseTime?: number,
-    resourceUtilization: number
 }
 ```

@@ -13,7 +13,7 @@ describe("Quantitative Analysis Engine", () => {
     describe("Complete Execution", () => {
         it("should return all quantitative analysis metrics", () => {
             const analysisEngine = new QuantitativeAnalysisEngine(instance);
-            const metrics = analysisEngine.getAllMetrics();
+            const metrics = analysisEngine.getAllMetrics(true);
 
             const dataAccessResult = metrics.find(m => m.externalBehaviour === "DATA ACCESS");
             const viewDamageReport = metrics.find(m => m.externalBehaviour === "VIEW DAMAGE REPORT");
@@ -43,7 +43,7 @@ describe("Quantitative Analysis Engine", () => {
 
         it("should return a CSV output", () => {
             const analysisEngine = new QuantitativeAnalysisEngine(instance);
-            const metrics = analysisEngine.getAllMetricsAsCsv();
+            const metrics = analysisEngine.getAllMetricsAsCsv(";", false);
 
             const dataAccessResult = metrics.find(l => l.includes("DATA ACCESS"));
             const viewDamageReport = metrics.find(l => l.includes("VIEW DAMAGE REPORT"));
