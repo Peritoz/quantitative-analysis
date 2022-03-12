@@ -13,7 +13,7 @@ describe("Quantitative Analysis Engine", () => {
     describe("Complete Execution", () => {
         it("should return all quantitative analysis metrics", () => {
             const analysisEngine = new QuantitativeAnalysisEngine(instance);
-            const metrics = analysisEngine.getAllMetrics();
+            const metrics = analysisEngine.getAllMetrics(true);
 
             const dataAccessResult = metrics.find(m => m.externalBehaviour === "DATA ACCESS");
             const viewDamageReport = metrics.find(m => m.externalBehaviour === "VIEW DAMAGE REPORT");

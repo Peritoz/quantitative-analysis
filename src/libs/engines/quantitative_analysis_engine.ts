@@ -6,15 +6,15 @@ import {formatNumber} from "@libs/utils/format_number";
 import {normalizeDistribution} from "@libs/utils/normalization";
 
 export default class QuantitativeAnalysisEngine {
-    workloadEngine: WorkloadEngine;
-    performanceEngine: PerformanceEngine;
+    protected workloadEngine: WorkloadEngine;
+    protected performanceEngine: PerformanceEngine;
 
     constructor(model: Model) {
         this.workloadEngine = new WorkloadEngine(model);
         this.performanceEngine = new PerformanceEngine(model);
     }
 
-    getAllMetrics(includeNormalizedValues: boolean = true) {
+    getAllMetrics(includeNormalizedValues: boolean = false): Array<QuantitativeMetric> {
         const workloadMetrics: Array<Partial<QuantitativeMetric>> = this.workloadEngine.getAllWorkloadsMetrics();
         const metrics: Array<QuantitativeMetric> = this.performanceEngine.getAllPerformanceMetrics();
 
@@ -36,32 +36,44 @@ export default class QuantitativeAnalysisEngine {
             // Getting normalized workload
             normalizeDistribution<QuantitativeMetric>(
                 metrics,
-                (element: QuantitativeMetric) => {return element.workload},
-                (element: QuantitativeMetric, value: number) => {element.normalizedWorkload = value}
+                (element: QuantitativeMetric) => {
+                    return element.workload;
+                },
+                (element: QuantitativeMetric, value: number) => {
+                    element.normalizedWorkload = value;
+                }
             );
 
             // Getting normalized response time
             normalizeDistribution<QuantitativeMetric>(
                 metrics,
-                (element: QuantitativeMetric) => {return element.responseTime},
-                (element: QuantitativeMetric, value: number) => {element.normalizedResponseTime = value}
+                (element: QuantitativeMetric) => {
+                    return element.responseTime;
+                },
+                (element: QuantitativeMetric, value: number) => {
+                    element.normalizedResponseTime = value;
+                }
             );
 
             // Getting normalized processing time
             normalizeDistribution<QuantitativeMetric>(
                 metrics,
-                (element: QuantitativeMetric) => {return element.processingTime},
-                (element: QuantitativeMetric, value: number) => {element.normalizedProcessingTime = value}
+                (element: QuantitativeMetric) => {
+                    return element.processingTime;
+                },
+                (element: QuantitativeMetric, value: number) => {
+                    element.normalizedProcessingTime = value;
+                }
             );
         }
 
         return metrics;
     }
 
-    getAllMetricsAsCsv(separator: string = ";") {
+    getAllMetricsAsCsv(separator: string = ";"): Array<string> {
         const sep = separator;
-        const metrics = this.getAllMetrics();
-        let response = [`resource${sep}service${sep}wLoad${sep}procTime${sep}respTime${sep}util`];
+        const metrics: Array<QuantitativeMetric> = this.getAllMetrics();
+        let response: Array<string> = [`resource${sep}service${sep}wLoad${sep}procTime${sep}respTime${sep}util`];
 
         for (let i = 0; i < metrics.length; i++) {
             const metric = metrics[i];
