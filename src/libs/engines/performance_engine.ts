@@ -2,7 +2,7 @@ import Resource from "@libs/model/resource";
 import InternalBehaviour from "@libs/model/internal_behaviour";
 import Model from "@libs/model/model";
 import WorkloadEngine from "@libs/engines/workload_engine";
-import QuantitativeMetric from "@libs/model/interfaces/performance_metric";
+import QuantitativeMetric from "@libs/model/interfaces/quantitative_metric";
 
 export default class PerformanceEngine {
     model: Model;

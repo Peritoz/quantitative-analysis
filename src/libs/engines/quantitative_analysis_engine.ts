@@ -1,7 +1,7 @@
 import WorkloadEngine from "@libs/engines/workload_engine";
 import PerformanceEngine from "@libs/engines/performance_engine";
 import Model from "@libs/model/model";
-import QuantitativeMetric from "@libs/model/interfaces/performance_metric";
+import QuantitativeMetric from "@libs/model/interfaces/quantitative_metric";
 import {formatNumber} from "@libs/utils/format_number";
 
 export default class QuantitativeAnalysisEngine {
