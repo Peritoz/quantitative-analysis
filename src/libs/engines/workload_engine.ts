@@ -3,6 +3,7 @@ import Resource from "@libs/model/resource";
 import ExternalBehaviour from "@libs/model/external_behaviour";
 import Model from "@libs/model/model";
 import ModelElement from "@libs/model/model_element";
+import QuantitativeMetric from "@libs/model/interfaces/quantitative_metric";
 
 class WorkloadEngine {
     model: Model;
@@ -25,9 +26,9 @@ class WorkloadEngine {
         return workload;
     }
 
-    getAllWorkloadsMetrics() {
+    getAllWorkloadsMetrics(): Array<Partial<QuantitativeMetric>> {
         const externalBehaviours = this.model.getAllByType(ExternalBehaviour);
-        let result = [];
+        let result: Array<Partial<QuantitativeMetric>> = [];
 
         for (let i = 0; i < externalBehaviours.length; i++) {
             const behaviour = externalBehaviours[i];
@@ -49,10 +50,10 @@ class WorkloadEngine {
                         workload
                     });
                 } else {
-                    throw new Error(`Model is corrupt for quantitative analysis. Missing Resource`);
+                    throw new Error(`Model is corrupted for quantitative analysis. Missing Resource`);
                 }
             } else {
-                throw new Error(`Model is corrupt for quantitative analysis. Missing Internal Behaviour`);
+                throw new Error(`Model is corrupted for quantitative analysis. Missing Internal Behaviour`);
             }
         }
 
