@@ -135,8 +135,11 @@ PerformanceMetricInterface {
     internalBehaviour: string,
     externalBehaviour: string,
     workload: number,
+    normalizedWorkload?: number,
     processingTime: number,
+    normalizedProcessingTime?: number,
     responseTime: number,
+    normalizedResponseTime?: number,
     resourceUtilization: number
 }
 ```

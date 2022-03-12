@@ -3,7 +3,10 @@ export default interface PerformanceMetricInterface {
     internalBehaviour: string,
     externalBehaviour: string,
     workload: number,
+    normalizedWorkload?: number,
     processingTime: number,
+    normalizedProcessingTime?: number,
     responseTime: number,
-    resourceUtilization: number
+    normalizedResponseTime?: number,
+    resourceUtilization: number // Utilization is in percentage, so it doesn't make much sense to normalize
 }

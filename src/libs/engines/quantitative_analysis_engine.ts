@@ -2,14 +2,8 @@ import WorkloadEngine from "@libs/engines/workload_engine";
 import PerformanceEngine from "@libs/engines/performance_engine";
 import Model from "@libs/model/model";
 import PerformanceMetricInterface from "@libs/engines/performance_metric";
-
-function formatNumber(number: number | undefined | null): string {
-    if (number !== undefined && number !== null) {
-        return number.toFixed(4).replace(".", ",");
-    } else {
-        return "?";
-    }
-}
+import {formatNumber} from "@libs/utils/format_number";
+import {normalize} from "@libs/utils/normalize";
 
 export default class QuantitativeAnalysisEngine {
     workloadEngine: WorkloadEngine;
@@ -32,7 +26,7 @@ export default class QuantitativeAnalysisEngine {
             let metric = metrics.find(m => m.internalBehaviour === workloadMetric.internalBehaviour &&
                 m.externalBehaviour === workloadMetric.externalBehaviour);
 
-            if(metric){
+            if (metric) {
                 metric.workload = workloadMetric.workload;
             }
         }
