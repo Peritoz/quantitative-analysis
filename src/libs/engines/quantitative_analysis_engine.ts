@@ -70,9 +70,9 @@ export default class QuantitativeAnalysisEngine {
         return metrics;
     }
 
-    getAllMetricsAsCsv(separator: string = ";"): Array<string> {
+    getAllMetricsAsCsv(separator: string = ";", includeNormalizedValues: boolean = false): Array<string> {
         const sep = separator;
-        const metrics: Array<QuantitativeMetric> = this.getAllMetrics();
+        const metrics: Array<QuantitativeMetric> = this.getAllMetrics(includeNormalizedValues);
         let response: Array<string> = [`resource${sep}service${sep}wLoad${sep}procTime${sep}respTime${sep}util`];
 
         for (let i = 0; i < metrics.length; i++) {

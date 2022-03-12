@@ -118,7 +118,7 @@ class QuantitativeAnalysisEngine {
 
     getAllMetrics(includeNormalizedValues: boolean = false): Array<QuantitativeMetric>;
 
-    getAllMetricsAsCsv(separator: string = ";"): Array<string>;
+    getAllMetricsAsCsv(separator: string = ";", includeNormalizedValues: boolean = false): Array<string>;
 }
 ```
 

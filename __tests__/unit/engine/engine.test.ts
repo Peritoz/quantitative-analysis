@@ -43,7 +43,7 @@ describe("Quantitative Analysis Engine", () => {
 
         it("should return a CSV output", () => {
             const analysisEngine = new QuantitativeAnalysisEngine(instance);
-            const metrics = analysisEngine.getAllMetricsAsCsv(";");
+            const metrics = analysisEngine.getAllMetricsAsCsv(";", false);
 
             const dataAccessResult = metrics.find(l => l.includes("DATA ACCESS"));
             const viewDamageReport = metrics.find(l => l.includes("VIEW DAMAGE REPORT"));
