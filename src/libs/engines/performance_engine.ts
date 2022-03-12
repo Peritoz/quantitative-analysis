@@ -63,9 +63,9 @@ export default class PerformanceEngine {
         return responseTime;
     }
 
-    getAllPerformanceMetrics(): Array<Partial<QuantitativeMetric>> {
+    getAllPerformanceMetrics(): Array<QuantitativeMetric> {
         const internalBehaviours = this.model.getAllByType(InternalBehaviour);
-        let result = [];
+        let result: Array<QuantitativeMetric> = [];
 
         for (let i = 0; i < internalBehaviours.length; i++) {
             const behaviour = internalBehaviours[i];
@@ -88,7 +88,8 @@ export default class PerformanceEngine {
                         externalBehaviour: externalBehaviour.getName(),
                         processingTime,
                         responseTime,
-                        resourceUtilization
+                        resourceUtilization,
+                        workload: 0
                     });
                 } else {
                     throw new Error(`Model is corrupted for quantitative analysis. Missing External Behaviour`);

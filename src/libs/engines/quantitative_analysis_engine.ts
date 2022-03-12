@@ -3,7 +3,7 @@ import PerformanceEngine from "@libs/engines/performance_engine";
 import Model from "@libs/model/model";
 import QuantitativeMetric from "@libs/model/interfaces/quantitative_metric";
 import {formatNumber} from "@libs/utils/format_number";
-import {findRanges, normalizeValue} from "@libs/utils/normalization";
+import {normalizeDistribution} from "@libs/utils/normalization";
 
 export default class QuantitativeAnalysisEngine {
     workloadEngine: WorkloadEngine;
@@ -15,55 +15,44 @@ export default class QuantitativeAnalysisEngine {
     }
 
     getAllMetrics(includeNormalizedValues: boolean = true) {
-        const workloadMetrics = this.workloadEngine.getAllWorkloadsMetrics();
-        const metrics: Array<Partial<QuantitativeMetric>> = this.performanceEngine.getAllPerformanceMetrics();
+        const workloadMetrics: Array<Partial<QuantitativeMetric>> = this.workloadEngine.getAllWorkloadsMetrics();
+        const metrics: Array<QuantitativeMetric> = this.performanceEngine.getAllPerformanceMetrics();
 
         // Combining metrics
         for (let i = 0; i < workloadMetrics.length; i++) {
             const workloadMetric = workloadMetrics[i];
 
-            let metric = metrics.find(m => m.internalBehaviour === workloadMetric.internalBehaviour &&
-                m.externalBehaviour === workloadMetric.externalBehaviour);
+            let metric: QuantitativeMetric | undefined = metrics.find(
+                m => m.internalBehaviour === workloadMetric.internalBehaviour &&
+                    m.externalBehaviour === workloadMetric.externalBehaviour);
 
-            if (metric) {
+            if (metric !== undefined && workloadMetric.workload !== undefined) {
                 metric.workload = workloadMetric.workload;
             }
         }
 
         // Calculating normalized values
         if (includeNormalizedValues) {
-            const minMaxMap = findRanges<Partial<QuantitativeMetric>>(metrics);
+            // Getting normalized workload
+            normalizeDistribution<QuantitativeMetric>(
+                metrics,
+                (element: QuantitativeMetric) => {return element.workload},
+                (element: QuantitativeMetric, value: number) => {element.normalizedWorkload = value}
+            );
 
-            for (let i = 0; i < metrics.length; i++) {
-                const metric = metrics[i];
+            // Getting normalized response time
+            normalizeDistribution<QuantitativeMetric>(
+                metrics,
+                (element: QuantitativeMetric) => {return element.responseTime},
+                (element: QuantitativeMetric, value: number) => {element.normalizedResponseTime = value}
+            );
 
-                // Getting normalized workload
-                if (metric.workload !== undefined && minMaxMap["workload"] !== undefined) {
-                    metric.normalizedWorkload = normalizeValue(
-                        metric.workload,
-                        minMaxMap["workload"].min,
-                        minMaxMap["workload"].max
-                    );
-                }
-
-                // Getting normalized response time
-                if (metric.responseTime !== undefined && minMaxMap["responseTime"] !== undefined) {
-                    metric.normalizedResponseTime = normalizeValue(
-                        metric.responseTime,
-                        minMaxMap["responseTime"].min,
-                        minMaxMap["responseTime"].max
-                    );
-                }
-
-                // Getting normalized processing time
-                if (metric.processingTime !== undefined && minMaxMap["processingTime"] !== undefined) {
-                    metric.normalizedProcessingTime = normalizeValue(
-                        metric.processingTime,
-                        minMaxMap["processingTime"].min,
-                        minMaxMap["processingTime"].max
-                    );
-                }
-            }
+            // Getting normalized processing time
+            normalizeDistribution<QuantitativeMetric>(
+                metrics,
+                (element: QuantitativeMetric) => {return element.processingTime},
+                (element: QuantitativeMetric, value: number) => {element.normalizedProcessingTime = value}
+            );
         }
 
         return metrics;
