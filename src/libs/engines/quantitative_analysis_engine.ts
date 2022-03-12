@@ -32,8 +32,8 @@ export default class QuantitativeAnalysisEngine {
         return metrics;
     }
 
-    getAllMetricsAsCsv() {
-        const sep = ";"
+    getAllMetricsAsCsv(separator: string) {
+        const sep = separator;
         const metrics = this.getAllMetrics();
         let response = [`resource${sep}service${sep}wLoad${sep}procTime${sep}respTime${sep}util`];
 
