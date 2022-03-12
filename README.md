@@ -127,10 +127,10 @@ Please see "Quantitative Analysis of Enterprise Architectures" (2005) from Maria
 
 ### Result
 
-You should expect as a result an array of Performance Metrics, as described below:
+You should expect as a result an array of Quantitative Metrics, as described below:
 
 ```
-PerformanceMetricInterface {
+QuantitativeMetric {
     resource: string,
     internalBehaviour: string,
     externalBehaviour: string,

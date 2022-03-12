@@ -1,4 +1,4 @@
-export default interface PerformanceMetricInterface {
+export default interface QuantitativeMetric {
     resource: string,
     internalBehaviour: string,
     externalBehaviour: string,

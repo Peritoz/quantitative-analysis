@@ -1,9 +1,8 @@
 import WorkloadEngine from "@libs/engines/workload_engine";
 import PerformanceEngine from "@libs/engines/performance_engine";
 import Model from "@libs/model/model";
-import PerformanceMetricInterface from "@libs/engines/performance_metric";
+import QuantitativeMetric from "@libs/model/interfaces/performance_metric";
 import {formatNumber} from "@libs/utils/format_number";
-import {normalize} from "@libs/utils/normalize";
 
 export default class QuantitativeAnalysisEngine {
     workloadEngine: WorkloadEngine;
@@ -16,10 +15,9 @@ export default class QuantitativeAnalysisEngine {
 
     getAllMetrics() {
         const workloadMetrics = this.workloadEngine.getAllWorkloadsMetrics();
+        const metrics: Array<Partial<QuantitativeMetric>> = this.performanceEngine.getAllPerformanceMetrics();
 
         // Combining metrics
-        let metrics: Array<Partial<PerformanceMetricInterface>> = this.performanceEngine.getAllPerformanceMetrics();
-
         for (let i = 0; i < workloadMetrics.length; i++) {
             const workloadMetric = workloadMetrics[i];
 

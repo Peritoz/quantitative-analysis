@@ -2,7 +2,7 @@ import Resource from "@libs/model/resource";
 import InternalBehaviour from "@libs/model/internal_behaviour";
 import Model from "@libs/model/model";
 import WorkloadEngine from "@libs/engines/workload_engine";
-import PerformanceMetricInterface from "@libs/engines/performance_metric";
+import QuantitativeMetric from "@libs/model/interfaces/performance_metric";
 
 export default class PerformanceEngine {
     model: Model;
@@ -63,7 +63,7 @@ export default class PerformanceEngine {
         return responseTime;
     }
 
-    getAllPerformanceMetrics(): Array<Partial<PerformanceMetricInterface>> {
+    getAllPerformanceMetrics(): Array<Partial<QuantitativeMetric>> {
         const internalBehaviours = this.model.getAllByType(InternalBehaviour);
         let result = [];
 
@@ -91,10 +91,10 @@ export default class PerformanceEngine {
                         resourceUtilization
                     });
                 } else {
-                    throw new Error(`Model is corrupt for quantitative analysis. Missing External Behaviour`);
+                    throw new Error(`Model is corrupted for quantitative analysis. Missing External Behaviour`);
                 }
             } else {
-                throw new Error(`Model is corrupt for quantitative analysis. Missing Resource`);
+                throw new Error(`Model is corrupted for quantitative analysis. Missing Resource`);
             }
         }
 

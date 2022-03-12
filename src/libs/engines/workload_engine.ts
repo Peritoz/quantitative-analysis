@@ -49,10 +49,10 @@ class WorkloadEngine {
                         workload
                     });
                 } else {
-                    throw new Error(`Model is corrupt for quantitative analysis. Missing Resource`);
+                    throw new Error(`Model is corrupted for quantitative analysis. Missing Resource`);
                 }
             } else {
-                throw new Error(`Model is corrupt for quantitative analysis. Missing Internal Behaviour`);
+                throw new Error(`Model is corrupted for quantitative analysis. Missing Internal Behaviour`);
             }
         }
 
