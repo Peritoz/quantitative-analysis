@@ -13,11 +13,11 @@ export default class InternalBehaviour extends ModelElement {
         this.serviceTime = data.serviceTime;
     }
 
-    getServiceTime() {
+    getServiceTime(): number {
         return this.serviceTime.getValue();
     }
 
-    setServiceTime(serviceTime: number) {
+    setServiceTime(serviceTime: number): void {
         this.serviceTime.setValue(serviceTime);
     }
 }

@@ -5,7 +5,7 @@ export default class ModelElement {
         this.name = name.toUpperCase();
     }
 
-    getName() {
+    getName(): string {
         return this.name;
     }
 }

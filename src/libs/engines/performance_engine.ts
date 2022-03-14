@@ -11,7 +11,7 @@ export default class PerformanceEngine {
         this.model = model;
     }
 
-    getResourceUtilization(resource: Resource) {
+    getResourceUtilization(resource: Resource): number {
         const capacity = resource.getCapacity();
         const relationships = this.model.getOutRelationships(resource);
         let utilization = 0;
@@ -30,7 +30,7 @@ export default class PerformanceEngine {
         return utilization / capacity;
     }
 
-    getProcessingTime(behaviour: InternalBehaviour) {
+    getProcessingTime(behaviour: InternalBehaviour): number {
         let processingTime = behaviour.getServiceTime();
         let relationships = this.model.getInRelationships(behaviour);
 
@@ -48,7 +48,7 @@ export default class PerformanceEngine {
         return processingTime;
     }
 
-    getResponseTime(behaviour: InternalBehaviour) {
+    getResponseTime(behaviour: InternalBehaviour): number {
         const relationships = this.model.getInRelationships(behaviour);
         let responseTime = 0;
 

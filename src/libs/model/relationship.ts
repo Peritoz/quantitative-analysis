@@ -1,28 +1,38 @@
 import ModelElement from "@libs/model/model_element";
 
 export default class Relationship {
-    source: ModelElement = new ModelElement("UNKNOWN");
-    target: ModelElement = new ModelElement("UNKNOWN");
-    cardinality: number = 1;
+    source: ModelElement;
+    target: ModelElement;
+    cardinality: number;
 
     constructor(data: { source: ModelElement, target: ModelElement, cardinality?: number }) {
         this.source = data.source;
         this.target = data.target;
 
-        if (data.cardinality !== undefined) {
+        if (data.cardinality !== undefined && data.cardinality > 0) {
             this.cardinality = data.cardinality;
+        } else {
+            this.cardinality = 1;
         }
     }
 
-    getSource() {
+    getSource(): ModelElement {
         return this.source;
     }
 
-    getTarget() {
+    getTarget(): ModelElement {
         return this.target;
     }
 
-    getCardinality() {
+    getCardinality(): number {
         return this.cardinality;
+    }
+
+    setCardinality(cardinality: number): void {
+        if (cardinality > 0) {
+            this.cardinality = cardinality;
+        } else {
+            throw new Error(`Relationship cardinality should be greater than 0`);
+        }
     }
 }
