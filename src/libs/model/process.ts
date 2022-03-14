@@ -13,11 +13,11 @@ export default class Process extends ModelElement {
         this.requestFrequency = data.requestFrequency;
     }
 
-    getRequestFrequency() {
+    getRequestFrequency(): number {
         return this.requestFrequency.getValue();
     }
 
-    setRequestFrequency(requestFrequency: number) {
+    setRequestFrequency(requestFrequency: number): void {
         this.requestFrequency.setValue(requestFrequency);
     }
 }
