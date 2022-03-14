@@ -34,35 +34,35 @@ export default class Model {
         Object.assign(this, data);
     }
 
-    getName() {
+    getName(): string {
         return this.name;
     }
 
-    getElement(elementName: string) {
+    getElement(elementName: string): ModelElement | undefined {
         return this.elements.find(e => e.getName() === elementName.toUpperCase());
     }
 
-    getElements() {
+    getElements(): Array<ModelElement> {
         return this.elements;
     }
 
-    getRelationships() {
+    getRelationships(): Array<Relationship> {
         return this.relationships;
     }
 
-    getAllByType(typeConstructor: any) {
+    getAllByType(typeConstructor: any): Array<ModelElement> {
         return this.getElements().filter(e => e instanceof typeConstructor);
     }
 
-    getOutRelationships(element: ModelElement) {
+    getOutRelationships(element: ModelElement): Array<Relationship> {
         return this.relationships.filter(r => r.getSource().getName() === element.getName());
     }
 
-    getInRelationships(element: ModelElement | undefined) {
+    getInRelationships(element: ModelElement | undefined): Array<Relationship> {
         return this.relationships.filter(r => r.getTarget().getName() === element?.getName());
     }
 
-    removeElement(elementName: string) {
+    removeElement(elementName: string): void {
         const key = elementName.toUpperCase();
         const elementIndex = this.elements.findIndex(e => e.getName() === key);
 
@@ -72,7 +72,7 @@ export default class Model {
         }
     }
 
-    removeRelationshipsToElement(elementName: string) {
+    removeRelationshipsToElement(elementName: string): void {
         const key = elementName.toUpperCase();
 
         // Inbound
@@ -82,7 +82,7 @@ export default class Model {
         this.relationships = this.relationships.filter(r => r.getSource().getName() !== key);
     }
 
-    removeRelationship(sourceName: string, targetName: string) {
+    removeRelationship(sourceName: string, targetName: string): void {
         const sourceKey = sourceName.toUpperCase();
         const targetKey = targetName.toUpperCase();
         const relIndex = this.relationships.findIndex(r => r.getSource().getName() === sourceKey && r.getTarget().getName() === targetKey);
@@ -92,7 +92,7 @@ export default class Model {
         }
     }
 
-    createRelationship(sourceName: string, targetName: string, cardinality: number) {
+    createRelationship(sourceName: string, targetName: string, cardinality: number): void {
         const source = this.elements.find(e => e.getName() === sourceName.toUpperCase());
         const target = this.elements.find(e => e.getName() === targetName.toUpperCase());
 
@@ -113,7 +113,7 @@ export default class Model {
         }
     }
 
-    createProcess(process: { name: string, requestFrequency: number, frequencyPeriod?: TemporalUnit }) {
+    createProcess(process: { name: string, requestFrequency: number, frequencyPeriod?: TemporalUnit }): void {
         const requestFrequencyMeasure = new FrequencyMeasure(process.requestFrequency, process.frequencyPeriod);
 
         const elementObject = new Process({
@@ -126,12 +126,12 @@ export default class Model {
         this.processes.push(elementObject);
     }
 
-    createResource(resource: { name: string, capacity?: number }) {
+    createResource(resource: { name: string, capacity?: number }): void {
         const elementObject = new Resource(resource);
         this.elements.push(elementObject);
     }
 
-    createInternalBehaviour(internalBehaviour: { name: string, serviceTime: number, timeUnit?: TemporalUnit }) {
+    createInternalBehaviour(internalBehaviour: { name: string, serviceTime: number, timeUnit?: TemporalUnit }): void {
         const serviceTimeMeasure = new TemporalMeasure(internalBehaviour.serviceTime, internalBehaviour.timeUnit);
 
         const elementObject = new InternalBehaviour({
@@ -142,12 +142,12 @@ export default class Model {
         this.elements.push(elementObject);
     }
 
-    createExternalBehaviour(externalBehaviour: { name: string }) {
+    createExternalBehaviour(externalBehaviour: { name: string }): void {
         const elementObject = new ExternalBehaviour(externalBehaviour);
         this.elements.push(elementObject);
     }
 
-    setProcessRequestFrequency(processName: string, requestFrequency: number) {
+    setProcessRequestFrequency(processName: string, requestFrequency: number): void {
         const process = this.processes.find(p => p.getName() === processName.toUpperCase());
 
         if (process) {
@@ -157,7 +157,7 @@ export default class Model {
         }
     }
 
-    setServiceTime(internalBehaviourName: string, serviceTime: number) {
+    setServiceTime(internalBehaviourName: string, serviceTime: number): void {
         const internalBehaviour = this.elements.find(e => e.getName() === internalBehaviourName.toUpperCase());
 
         if (internalBehaviour && internalBehaviour instanceof InternalBehaviour) {
@@ -167,7 +167,7 @@ export default class Model {
         }
     }
 
-    setResourceCapacity(resourceName: string, capacity: number) {
+    setResourceCapacity(resourceName: string, capacity: number): void {
         const resource = this.elements.find(e => e.getName() === resourceName.toUpperCase());
 
         if (resource && resource instanceof Resource) {
@@ -177,7 +177,7 @@ export default class Model {
         }
     }
 
-    fromJSON(modelInput: Partial<JsonModel>) {
+    fromJSON(modelInput: Partial<JsonModel>): void {
         if (modelInput.name && modelInput.elements && Array.isArray(modelInput.elements) &&
             modelInput.relationships && Array.isArray(modelInput.relationships)) {
             const {name, elements, relationships} = modelInput;

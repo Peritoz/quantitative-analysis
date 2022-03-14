@@ -12,7 +12,7 @@ class WorkloadEngine {
         this.model = model;
     }
 
-    getWorkload(element: ModelElement) {
+    getWorkload(element: ModelElement): number {
         const outRelationships = this.model.getOutRelationships(element);
         let workload = element instanceof Process ? (element as Process).getRequestFrequency() : 0;
 
