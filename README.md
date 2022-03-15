@@ -32,12 +32,12 @@ The architecture to be analyzed must be described using four basic building bloc
 The structure above represents the normalized model, which is imperative to a proper quantitative analysis.
 
 - **Process**: Represents an entry point to the architecture. Usually it is related to user behaviour. Processes have the following properties:
-  - *Request frequency*: Frequency of requests made to the architecture. The frequency is always in amount per unit of time, e.g., 500/s.
+  - *Request frequency*: Frequency of requests made to the architecture. The frequency is always in amount per unit of time, e.g., 500/s. An extreme request frequency can lead to excessive resource usage, invalidating the analysis.
 - **External Behaviour**: Represents externalized behaviour (service) by a resource (transitively).
 - **Internal Behaviour**: Represents internal processing units performed by a resource. Internal behaviours have the following properties:
-  - *Service Time*: Processing time for the execution of the behaviour. Long service time will cause excessive utilization of resources, invalidating the analysis.
+  - *Service Time*: Processing time for the execution of the behaviour. Long service time will cause excessive resource usage, invalidating the analysis.
 - **Resource**: Represents active structure elements, i.e., elements capable of performing a behaviour. Resources have the following properties:
-  - *Capacity*: The capacity of a resource. The default is one.
+  - *Capacity*: The capacity of a resource. The default is one. **Important:** The current version of this lib does not support quantitative analysis with Resources with Capacity greater than one.
 
 ## Model Building
 
