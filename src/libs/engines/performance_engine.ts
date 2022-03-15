@@ -91,8 +91,6 @@ export default class PerformanceEngine {
                         resourceUtilization,
                         workload: 0
                     });
-                } else {
-                    throw new Error(`Model is corrupted for quantitative analysis. Missing External Behaviour`);
                 }
             } else {
                 throw new Error(`Model is corrupted for quantitative analysis. Missing Resource`);
