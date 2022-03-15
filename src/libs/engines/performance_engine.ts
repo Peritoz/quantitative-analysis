@@ -27,6 +27,10 @@ export default class PerformanceEngine {
             utilization += workload * processingTime;
         }
 
+        if (utilization / capacity >= 1) {
+            throw new Error(`Resource ${resource.getName()}: Utilization is greater than or equal to 100%. This is due to a long service time`);
+        }
+
         return utilization / capacity;
     }
 

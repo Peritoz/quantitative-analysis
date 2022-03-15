@@ -34,6 +34,21 @@ export default class Model {
         Object.assign(this, data);
     }
 
+    protected validateRelationship(source: ModelElement, target: ModelElement): boolean {
+        /**
+         * Valid relationships:
+         *
+         * Resource -> Internal Behaviour
+         * Internal Behaviour -> External Behaviour
+         * External Behaviour -> Process
+         * External Behaviour -> Internal Behaviour
+         */
+        return (source instanceof Resource && target instanceof InternalBehaviour) ||
+            (source instanceof InternalBehaviour && target instanceof ExternalBehaviour) ||
+            (source instanceof ExternalBehaviour && target instanceof Process) ||
+            (source instanceof ExternalBehaviour && target instanceof InternalBehaviour);
+    }
+
     getName(): string {
         return this.name;
     }
@@ -98,13 +113,15 @@ export default class Model {
 
         if (source) {
             if (target) {
-                const relationshipObject = new Relationship({
-                    source,
-                    target,
-                    cardinality
-                });
+                if(this.validateRelationship(source, target)){
+                    const relationshipObject = new Relationship({
+                        source,
+                        target,
+                        cardinality
+                    });
 
-                this.relationships.push(relationshipObject);
+                    this.relationships.push(relationshipObject);
+                }
             } else {
                 console.warn(`Orphan relationship. Target "${targetName}" not found`);
             }
