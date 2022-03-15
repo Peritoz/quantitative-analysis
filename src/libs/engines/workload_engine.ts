@@ -4,6 +4,7 @@ import ExternalBehaviour from "@libs/model/external_behaviour";
 import Model from "@libs/model/model";
 import ModelElement from "@libs/model/model_element";
 import QuantitativeMetric from "@libs/model/interfaces/quantitative_metric";
+import InternalBehaviour from "@libs/model/internal_behaviour";
 
 class WorkloadEngine {
     model: Model;
@@ -35,25 +36,27 @@ class WorkloadEngine {
             const inRelationships = this.model.getInRelationships(behaviour);
             const internalBehaviour = inRelationships.length === 1 ? inRelationships[0].getSource() : null;
 
-            if (internalBehaviour) {
-                const internalBehaviorInRelationships = this.model.getInRelationships(internalBehaviour);
-                const resources = internalBehaviorInRelationships.filter(r => r.getSource() instanceof Resource);
-                const resource = resources.length === 1 ? resources[0].getSource() : null;
+            if (internalBehaviour instanceof InternalBehaviour) {
+                if (internalBehaviour) {
+                    const internalBehaviorInRelationships = this.model.getInRelationships(internalBehaviour);
+                    const resources = internalBehaviorInRelationships.filter(r => r.getSource() instanceof Resource);
+                    const resource = resources.length === 1 ? resources[0].getSource() : null;
 
-                if (resource) {
-                    const workload = this.getWorkload(behaviour);
+                    if (resource) {
+                        const workload = this.getWorkload(behaviour);
 
-                    result.push({
-                        resource: resource.getName(),
-                        externalBehaviour: behaviour.getName(),
-                        internalBehaviour: internalBehaviour.getName(),
-                        workload
-                    });
+                        result.push({
+                            resource: resource.getName(),
+                            externalBehaviour: behaviour.getName(),
+                            internalBehaviour: internalBehaviour.getName(),
+                            workload
+                        });
+                    } else {
+                        throw new Error(`Model is corrupted for quantitative analysis. Missing Resource`);
+                    }
                 } else {
-                    throw new Error(`Model is corrupted for quantitative analysis. Missing Resource`);
+                    throw new Error(`Model is corrupted for quantitative analysis. Missing Internal Behaviour`);
                 }
-            } else {
-                throw new Error(`Model is corrupted for quantitative analysis. Missing Internal Behaviour`);
             }
         }
 
