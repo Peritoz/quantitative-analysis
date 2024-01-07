@@ -1,27 +1,36 @@
 {
-    "compilerOptions": {
-        "lib": ["es2020"],
-        "module": "CommonJS",
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "allowJs": true,
-        "target": "es6",
-        "noImplicitAny": true,
-        "resolveJsonModule": true,
-        "sourceMap": true,
-        "declaration": true,
-        "removeComments": true,
-        "strict": true,
-        "outDir": "./dist/lib",
-        "declarationDir": "./dist/@types",
-        "typeRoots": ["./@types", "./node_modules/@types"],
-        "baseUrl": ".",
-        "paths": {
-            "@libs/*": ["src/libs/*"]
-        }
-    },
-    "include": [
-        "./src/**/*", "@types/**/*", "__tests__/**/*"
-    ]
+  "compilerOptions": {
+    "lib": [
+      "es2020"
+    ],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "target": "es6",
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "declaration": true,
+    "removeComments": true,
+    "strict": true,
+    "outDir": "./dist/lib",
+    "declarationDir": "./dist/@types",
+    "typeRoots": [
+      "./@types",
+      "./node_modules/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@libs/*": [
+        "src/libs/*"
+      ]
+    }
+  },
+  "include": [
+    "./src/**/*",
+    "@types/**/*",
+    "__tests__/**/*"
+  ]
 }
