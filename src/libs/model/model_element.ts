@@ -1,11 +1,11 @@
 export default class ModelElement {
-    name: string = "UNKNOWN";
+  name: string = 'UNKNOWN';
 
-    constructor(name: string) {
-        this.name = name.toUpperCase();
-    }
+  constructor(name: string) {
+    this.name = name.toUpperCase();
+  }
 
-    getName(): string {
-        return this.name;
-    }
+  getName(): string {
+    return this.name;
+  }
 }

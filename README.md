@@ -7,7 +7,8 @@ Performs quantitative analysis over a normalized model. The result of the analys
 - Response Time
 - Resource Utilization
 
-This library was based on "Quantitative Analysis of Enterprise Architectures" (2005) from Maria-Eugenia Iacob and Henk Jonkers.
+This library was based on "Quantitative Analysis of Enterprise Architectures" (2005) from Maria-Eugenia Iacob and Henk
+Jonkers.
 
 ## Installation
 
@@ -25,19 +26,26 @@ yarn add @peritoz/quantitative-analysis
 
 ## Model Structure
 
-The architecture to be analyzed must be described using four basic building blocks: Process, External Behaviour, Internal Behaviour and Resource. These elements are represented below.
+The architecture to be analyzed must be described using four basic building blocks: Process, External Behaviour,
+Internal Behaviour and Resource. These elements are represented below.
 
 ![Model representation](./docs/metamodel.jpg)
 
 The structure above represents the normalized model, which is imperative to a proper quantitative analysis.
 
-- **Process**: Represents an entry point to the architecture. Usually it is related to user behaviour. Processes have the following properties:
-  - *Request frequency*: Frequency of requests made to the architecture. The frequency is always in amount per unit of time, e.g., 500/s. An extreme request frequency can lead to excessive resource usage, invalidating the analysis.
+- **Process**: Represents an entry point to the architecture. Usually it is related to user behaviour. Processes have
+  the following properties:
+    - *Request frequency*: Frequency of requests made to the architecture. The frequency is always in amount per unit of
+      time, e.g., 500/s. An extreme request frequency can lead to excessive resource usage, invalidating the analysis.
 - **External Behaviour**: Represents externalized behaviour (service) by a resource (transitively).
-- **Internal Behaviour**: Represents internal processing units performed by a resource. Internal behaviours have the following properties:
-  - *Service Time*: Processing time for the execution of the behaviour. Long service time will cause excessive resource usage, invalidating the analysis.
-- **Resource**: Represents active structure elements, i.e., elements capable of performing a behaviour. Resources have the following properties:
-  - *Capacity*: The capacity of a resource. The default is one. **Important:** The current version of this lib does not support quantitative analysis with Resources with Capacity greater than one.
+- **Internal Behaviour**: Represents internal processing units performed by a resource. Internal behaviours have the
+  following properties:
+    - *Service Time*: Processing time for the execution of the behaviour. Long service time will cause excessive
+      resource usage, invalidating the analysis.
+- **Resource**: Represents active structure elements, i.e., elements capable of performing a behaviour. Resources have
+  the following properties:
+    - *Capacity*: The capacity of a resource. The default is one. **Important:** The current version of this lib does
+      not support quantitative analysis with Resources with Capacity greater than one.
 
 ## Model Building
 
@@ -45,7 +53,8 @@ There are two main ways to build a model for analysis: Importing a JSON descript
 
 ### JSON Importing
 
-The imported JSON must describe the elements and relationships of the model. Relationships must use the element's name as the key. A valid JSON input is presented below.
+The imported JSON must describe the elements and relationships of the model. Relationships must use the element's name
+as the key. A valid JSON input is presented below.
 
 ```
 {
@@ -135,7 +144,8 @@ const metrics = analysisEngine.getAllMetrics(true);
 
 NOTE: The usage depends on a normalized input model.
 
-Please see *"Quantitative Analysis of Enterprise Architectures"* (2005) from **Maria-Eugenia Iacob** and **Henk Jonkers** for more details about the processing algorithm.
+Please see *"Quantitative Analysis of Enterprise Architectures"* (2005) from **Maria-Eugenia Iacob** and **Henk Jonkers
+** for more details about the processing algorithm.
 
 ### Result
 

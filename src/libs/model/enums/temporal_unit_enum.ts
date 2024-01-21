@@ -1,5 +1,5 @@
-export enum TemporalUnit{
-    SEC,
-    MIN,
-    HOUR
+export enum TemporalUnit {
+  SEC,
+  MIN,
+  HOUR,
 }
