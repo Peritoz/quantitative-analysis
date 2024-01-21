@@ -1,5 +1,3 @@
-import QuantitativeMetric from "@libs/model/interfaces/quantitative_metric";
-
 /**
  * Normalizes an array of numbers to the range [0,1]. This function updates the input array.
  * @param distribution Array of numbers to be normalized
@@ -7,19 +5,19 @@ import QuantitativeMetric from "@libs/model/interfaces/quantitative_metric";
  * @param setter Custom function to set the normalized value in the element
  */
 export function normalizeDistribution<T extends { [key: string]: any }>(
-    distribution: Array<T>,
-    getter: (element: T) => number,
-    setter: (element: T, value: number) => void
+  distribution: Array<T>,
+  getter: (element: T) => number,
+  setter: (element: T, value: number) => void,
 ): void {
-    const values: Array<number> = distribution.map(e => getter(e));
-    const min = Math.min(...values);
-    const valuesSubtractedByMin = values.map(n => n - min);
-    const max = Math.max(...valuesSubtractedByMin);
+  const values: Array<number> = distribution.map(e => getter(e));
+  const min = Math.min(...values);
+  const valuesSubtractedByMin = values.map(n => n - min);
+  const max = Math.max(...valuesSubtractedByMin);
 
-    for (let i = 0; i < distribution.length; i++) {
-        const element = distribution[i];
-        const normalizedValue = valuesSubtractedByMin[i] / max;
+  for (let i = 0; i < distribution.length; i++) {
+    const element = distribution[i];
+    const normalizedValue = valuesSubtractedByMin[i] / max;
 
-        setter(element, normalizedValue);
-    }
+    setter(element, normalizedValue);
+  }
 }
